@@ -18,10 +18,10 @@ class LogIN extends StatefulWidget {
   State<LogIN> createState() => _LogINState();
 }
 
-   FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
-  GlobalKey<FormState> _loginKey=GlobalKey<FormState>();
-  TextEditingController loginEmailController=TextEditingController();
-  TextEditingController loginPassController=TextEditingController();
+   final FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
+  final GlobalKey<FormState> _loginKey=GlobalKey<FormState>();
+  final TextEditingController loginEmailController=TextEditingController();
+   final TextEditingController loginPassController=TextEditingController();
 
 
 
@@ -46,8 +46,8 @@ class _LogINState extends State<LogIN> {
             children: [
 
                     /// Page title SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-              Padding(
-                padding: const EdgeInsets.only(top:30 ,bottom: 0,right: 0,left:0 ),
+             const Padding(
+                padding:  EdgeInsets.only(top:30 ,bottom: 0,right: 0,left:0 ),
                 child: Text("LOGIN",style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize:35
@@ -55,7 +55,7 @@ class _LogINState extends State<LogIN> {
               ),
                  /// Page title EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
 

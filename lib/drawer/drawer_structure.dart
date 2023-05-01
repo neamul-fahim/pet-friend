@@ -11,7 +11,7 @@ import '../provider/app_drawer_provider.dart';
 import '../signin_login/login.dart';
 
 class CustomAppDrawer extends StatefulWidget {
-  const CustomAppDrawer({Key? key}) : super(key: key);
+  const CustomAppDrawer({Key? key,}) : super(key: key);
 
   @override
   State<CustomAppDrawer> createState() => _CustomAppDrawerState();
@@ -63,7 +63,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                           width: dynamicWidth*0.3,
                           ///child: finalImageFile==null?
 
-                          child:Image.asset("assets/image/profie_pic.jpg",fit: BoxFit.cover,),
+                          child:Image.asset("assets/car_pics/car2.jpg",fit: BoxFit.cover,),
                               ///:Image.file(finalImageFile!,fit: BoxFit.cover,),
                           decoration: BoxDecoration(
                             color: Colors.black,
@@ -81,7 +81,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                       ),
                       /// Profile pic EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-                      Text(appDrawerProvider.appDrawerModelClass.profileName.toString(),
+                      Text("Name", //appDrawerProvider.appDrawerModelClass.profileName.toString(),
                           style:TextStyle(fontSize: 20,fontWeight:FontWeight.w400 ) ),///User name
 
 
@@ -142,14 +142,22 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
     child:Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: (){
-          if(IconData==Icons.logout_rounded)///for logout
+        onTap: () async{
+          if(drawerOptionIcon==Icons.logout_rounded)///for logout
             {
-              FirebaseAuth.instance.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                return className();///test purpose
-              }
-              ));
+              await FirebaseAuth.instance.signOut().then((value) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("log out")));
+               // Scaffold.of(context).showBottomSheet((context) => Text("log out"));
+               // Navigator.popUntil(context, (route) => false);
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                  return className();///test purpose
+                }
+                ));
+              }).catchError((error){
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message)));
+
+              });
+              
             }
           else ///for other drawer options
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
