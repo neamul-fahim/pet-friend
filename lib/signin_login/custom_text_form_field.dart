@@ -1,32 +1,25 @@
 
 
-
-
-
-
-import 'package:flutter/material.dart';
-import 'package:pet_friend/signin_login/signin.dart';
+   import 'package:flutter/material.dart';
+   import 'package:pet_friend/signin_login/signin.dart';
 
 class CustomTextField extends StatefulWidget {
   TextEditingController textController;
   String ErrorMsg;
   String HintText;
-  String? LabelText;
+  String LabelText;
   IconData fieldIcon;
   bool obscurePass;
   CustomTextField({Key? key,
     required this.textController,
     required this.ErrorMsg,
     required this.HintText,
-   // required this.LabelText,
-    String? LabelText,///
+    required this.LabelText,
     required this.fieldIcon,
     required this.obscurePass,
 
-  }) : super(key: key)
-  { ///
-    this.LabelText=LabelText;///
-  }///
+  }) : super(key: key);
+
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -47,7 +40,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           {
             return widget.ErrorMsg;
           }
-          else if(widget.LabelText=="Confirm password" && signinPassController.text!=signinConfirmPassController.text)
+          else if(widget.LabelText=="Confirm password" && signinPassController.text!=signinConfirmPassController.text)  ///signinPassController and signinConfirmPassController controllers are defined globally in signin class thus importing the signin package makes the controllers accessible in this widget
             {
               return "Password doesn't match";
             }
@@ -63,6 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: widget.obscurePass,
         obscuringCharacter: "*",
         // cursorHeight: 30,
+
 
         ///Decoration SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
         decoration: InputDecoration(

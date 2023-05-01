@@ -1,6 +1,6 @@
 
-import 'dart:html';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -119,8 +119,8 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
 
   }
   XFile? imageXFile;
-  File? finalImageFile;
-   File? tempImage;
+ /// File? finalImageFile;
+  /// File? tempImage;
   Future SelectImage(source)async{
     final ImagePicker _picker=ImagePicker();
     imageXFile= await _picker.pickImage(source: source);
@@ -128,7 +128,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
     if (imageXFile==null) return;
      /// tempImage=File(imageXFile!.path);
     setState(() {
-      finalImageFile=tempImage;
+     /// finalImageFile=tempImage;
     });
      //return imageFile;
    // final XFile? video= await _picker.pickVideo(source: source);
@@ -145,7 +145,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
         onTap: (){
           if(IconData==Icons.logout_rounded)///for logout
             {
-              ///FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                 return className();///test purpose
               }

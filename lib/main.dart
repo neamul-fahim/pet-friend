@@ -4,7 +4,8 @@
 
 
 
-    import 'package:firebase_core/firebase_core.dart';
+    import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/provider/app_drawer_provider.dart';
 import 'package:pet_friend/provider/bird_provider.dart';
@@ -14,12 +15,13 @@ import 'package:pet_friend/provider/dog_provider.dart';
 import 'package:pet_friend/provider/filter_provider.dart';
 import 'package:pet_friend/provider/my_home_page_provider.dart';
 import 'package:pet_friend/provider/product_category_provider.dart';
+import 'package:pet_friend/signin_login/login.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'my_home_page/my_home_page.dart';
 
 Future <void> main() async{
-      // WidgetsFlutterBinding.ensureInitialized();
+       WidgetsFlutterBinding.ensureInitialized();
        await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
        );
@@ -52,8 +54,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: MyHomePage()
-       ///FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
+       home: //MyHomePage()
+       FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
     );
   }
 }
