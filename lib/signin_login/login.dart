@@ -207,7 +207,7 @@ class _LogINState extends State<LogIN> {
   if(_loginKey.currentState!.validate()) {}
   {
     await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password).then((value) {
+        email: email.trim(), password: password.trim()).then((value) {
       Fluttertoast.showToast(msg: 'Login successful');
       Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
 

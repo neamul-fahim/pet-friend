@@ -187,7 +187,7 @@ class _SignINState extends State<SignIN> {
                     ///To signup using FirebaseAuth SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
          void fireBaseSignin(String email,String password,BuildContext context)async {
 
-  await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+  await _firebaseAuth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim()).then((value){
 
     Fluttertoast.showToast(msg: "Login successful");
        saveUserData();///saving user data
