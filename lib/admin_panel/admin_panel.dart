@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friend/admin_panel/add_product.dart';
 import 'package:pet_friend/model_class/app_drawer_model_class.dart';
 
   class AdminPanel extends StatelessWidget {
@@ -23,7 +24,7 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Container(
-                    //color: Colors.red,
+                   // color: Colors.white,
                     width: dSize.width,
                     height: dSize.height*0.25,
                     child: Row(
@@ -34,7 +35,7 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
                         Expanded(
                           flex:3,
                           child: Container(       ///test container
-                            //color: Colors.yellow,
+                            //color: Colors.red,
 
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
@@ -55,8 +56,9 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
 
                       Expanded(
                         flex: 1,
-                        child: Container( ///test container
-                          //color: Colors.white,
+                        child: Container(
+                         // padding: EdgeInsets.only(top: 150),///test container
+                         // color: Colors.yellow,
                           child: IconButton(///drawer cancel button
                              alignment: Alignment.topRight,
                             color: Colors.black,
@@ -82,7 +84,10 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
               TextButton.icon(
 
                   onPressed: (){
-
+                 Navigator.push(context, MaterialPageRoute(builder: (context){
+                   return
+                   AddProduct();
+                 }));
               },
                   label: Text("Add Item",style: TextStyle( fontSize: 20,color: Colors.black),),
                 icon:Icon(Icons.add_circle_rounded,size: dSize.width*0.08,color: Colors.black,) ,
