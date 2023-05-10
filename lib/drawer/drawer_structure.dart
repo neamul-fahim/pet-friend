@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_friend/admin_panel/admin_panel.dart';
 import 'package:provider/provider.dart';
 
 import '../cart/cart_screen.dart';
@@ -103,6 +104,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                       ),
                       drawerProperty(Icons.cloud_rounded, 'Login',context,()=>LogIN()),
                      drawerProperty(Icons.logout_rounded, 'Logout',context,()=>LogIN()),
+                      drawerProperty(Icons.admin_panel_settings, "Admin Panel", context, () => AdminPanel())
 
                       /// Drawer options EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
                     ],

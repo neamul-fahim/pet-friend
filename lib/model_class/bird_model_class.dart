@@ -1,26 +1,39 @@
 
 
-class BirdModelClass{
-  String key='bird';
-  String  id;
-  String  name;
-  List<String>  colors;
-  String talk;
-  String fly;
-  String  age;
-  double  price;
-  String  imgUrl;
+class BirdModelClass {
+   String? key = 'bird';
+  final String? id;
+  final String? name;
+  final List<String>? colors;
+  final String? talk;
+  final String? fly;
+  final String? age;
+  final double? price;
+  final String? imgUrl;
 
-  BirdModelClass(this.id, this.name, this.colors,this.talk,this.fly ,this.age,this.price,this.imgUrl);
+  BirdModelClass({this.key,this.id, this.name, this.colors, this.talk, this.fly, this.age, this.price, this.imgUrl});
+
+  Map<String, dynamic> toFirebase() {
+    return {
+      if(key!=null) "key":key,
+      if(id != null) "id": id,
+      if(name != null) "name": name,
+      if(colors != null) "colors": colors,
+      if(talk != null) "talk": talk,
+      if(fly != null) "fly": fly,
+      if(age != null) "age": age,
+      if(price != null) "price": price,
+      if(imgUrl != null) "imgUrl": imgUrl
+    };
+  }
 }
-
 
 class BirdRepository {
   final List<BirdModelClass> birds = [
-    BirdModelClass('bd1', 'budgerigar', ['blue', 'white', 'black'], "can't talk",'can fly','9 months', 75,'assets/bird_pics/budgerigar.jpg'),
-    BirdModelClass('bd2', 'parrot', ['yellow', 'green', 'blue', 'white', 'red'],"can talk",'can fly','6 months', 75, 'assets/bird_pics/parrot.jpg'),
-    BirdModelClass('bd3', 'owl', ['brown', 'white'],"can't talk", "can't fly",'1 year 2 months', 75,'assets/bird_pics/owl.jpg'),
-    BirdModelClass('bd4', 'blue jay', ['blue', 'white', 'black'],"can't talk","can't fly", '1 year', 75,'assets/bird_pics/blue jay.jpg'),
-    BirdModelClass('bd5', 'falcon', ['brown', 'black'],"can't talk", 'can fly','2 years', 75,'assets/bird_pics/falcon.jpg'),
+    BirdModelClass( name: 'budgerigar',colors:  ['blue', 'white', 'black'], talk: "can't talk",fly: 'can fly',age: '9 months', price: 75,imgUrl: 'assets/bird_pics/budgerigar.jpg'),
+    BirdModelClass( name: 'parrot', colors: ['yellow', 'green', 'blue', 'white', 'red'],talk: "can talk",fly: 'can fly',age: '6 months',price:  75,imgUrl:  'assets/bird_pics/parrot.jpg'),
+    BirdModelClass( name: 'owl', colors: ['brown', 'white'],talk: "can't talk", fly: "can't fly",age: '1 year 2 months',price:  75,imgUrl: 'assets/bird_pics/owl.jpg'),
+    BirdModelClass( name: 'blue jay',colors:  ['blue', 'white', 'black'],talk:  "can't talk",fly:  "can't fly", age: '1 year', price: 75,imgUrl: 'assets/bird_pics/blue jay.jpg'),
+    BirdModelClass( name: 'falcon',colors:  ['brown', 'black'],talk: "can't talk",fly:  'can fly',age: '2 years', price: 75,imgUrl: 'assets/bird_pics/falcon.jpg'),
   ];
 }
