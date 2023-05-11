@@ -195,36 +195,39 @@ class _AddProductState extends State<AddProduct> {
                   // ),
                 SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () async{
+                  onPressed: () {
+
                     if (_formKey.currentState!.validate()) {
                         _addStringToList();///might have problem
-                     var docID= await fireStore.collection("products").doc("pets").collection(firstItem).doc();
-                          docID.set(
-
-                              BirdModelClass(
-                             key: firstItem,
-                            id: docID.id,
+                     var docID= fireStore.collection("products").doc("pets").collection(firstItem).doc();
+                        var fireData=BirdModelClass(
+                          key: firstItem,
+                          id: docID.id,
                           name: _nameController.text,
-                         colors:_listOfColors,
-                        talk: _talkController.text,
-                        fly: _flyController.text,
-                        age: _ageController.text,
-                        price: double.parse(_priceController.text),
-                      ).toFirebase(),SetOptions(merge: true)).then((value){
+                          colors:_listOfColors,
+                          talk: _talkController.text,
+                          fly: _flyController.text,
+                          age: _ageController.text,
+                          price: double.parse(_priceController.text),
+                        );
+                        clearConstructors();
+
+                        docID.set(
+                             fireData.toFirebase(),SetOptions(merge: true)).then((value){
                        // print(value.);
 
                             firstItem=proList[0];
-                         clearConstructors();
                          setState(() {
                          });
-                            const ScaffoldMessenger(child: Text("data sent to server"),);
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                 const SnackBar(content: Center(child: Text("data uploaded to server"))));
                           }).catchError((err){
-                        ScaffoldMessenger(child: Text(err.toString()),);///err.message !!!!!
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text(err.toString()))));///err.message !!!!!
                       });
                       // Do something when the form is submitted
                     }
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
 
 
