@@ -7,7 +7,7 @@
    final Map<String,bool> _filterData={  //List<dynamic>
      "birds":false,//["Birds",false],
      "cats":false,//["Cats",false],
-     "dog":false,//["Dogs",false],
+     "dogs":false,//["Dogs",false],
    };
 
     Map get filterData{

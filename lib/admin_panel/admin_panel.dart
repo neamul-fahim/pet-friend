@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_friend/admin_panel/add_product.dart';
+import 'package:pet_friend/admin_panel/add_product/add_product_details.dart';
+import 'package:pet_friend/admin_panel/add_product/add_product_pic.dart';
 import 'package:pet_friend/model_class/app_drawer_model_class.dart';
 
   class AdminPanel extends StatelessWidget {
@@ -98,11 +99,8 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
           ),
           backgroundColor: Colors.teal.shade100,
         ),
-        body: Container(
-          decoration:BoxDecoration(
-            color:Colors.white,
-          ),
-        ),
+        body:
+        Container(color: Colors.white,)
       );
     }
   }

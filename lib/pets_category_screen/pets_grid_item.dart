@@ -13,11 +13,12 @@ class PetsCategoryGridItem extends StatelessWidget {
 
   final dynamic pets;
   const PetsCategoryGridItem({Key? key,this.pets}) : super(key: key);
- // var name=pets.name;
+
 
 
   @override
   Widget build(BuildContext context) {
+    ///print("${pets.key}++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
       var cart=Provider.of<CartProvider>(context);
     double dynamicHeight =MediaQuery.of(context).size.height;
@@ -50,7 +51,7 @@ class PetsCategoryGridItem extends StatelessWidget {
                  //color: Colors.blue,
                  child: FittedBox(
                    fit: BoxFit.scaleDown,
-                   child: pets.key=='bird'?
+                   child: pets.key=="birds"?
                    Text("${pets.name}",style: const TextStyle(fontSize: 15,),)
                        :Text("${pets.breed}",style: const TextStyle(fontSize: 15,),),
                  ),

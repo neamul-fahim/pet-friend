@@ -1,7 +1,7 @@
 
 
 class BirdModelClass {
-   String? key = 'bird';
+   String? key ;
   final String? id;
   final String? name;
   final List<String>? colors;
@@ -9,9 +9,10 @@ class BirdModelClass {
   final String? fly;
   final String? age;
   final double? price;
-  final String? imgUrl;
+   final String? imgUrl;
+   List<String>? imgURL;
 
-  BirdModelClass({this.key,this.id, this.name, this.colors, this.talk, this.fly, this.age, this.price, this.imgUrl});
+  BirdModelClass({this.key="bird",this.id, this.name, this.colors, this.talk, this.fly, this.age, this.price, this.imgUrl,this.imgURL});
 
   Map<String, dynamic> toFirebase() {
     return {
@@ -23,7 +24,7 @@ class BirdModelClass {
       if(fly != null) "fly": fly,
       if(age != null) "age": age,
       if(price != null) "price": price,
-      if(imgUrl != null) "imgUrl": imgUrl
+      if(imgURL != null) "imgURL": imgURL,
     };
   }
 }

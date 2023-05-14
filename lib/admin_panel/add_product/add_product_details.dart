@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_friend/admin_panel/add_product/add_product_pic.dart';
 import 'package:pet_friend/model_class/bird_model_class.dart';
 
 class AddProduct extends StatefulWidget {
@@ -13,7 +14,6 @@ class AddProduct extends StatefulWidget {
   State<AddProduct> createState() => _AddProductState();
 }
     List<String> proList=<String>["select","bird","dog","cat","food","accessory"];
-   final fireStore=FirebaseFirestore.instance;
 class _AddProductState extends State<AddProduct> {
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -199,10 +199,7 @@ class _AddProductState extends State<AddProduct> {
 
                     if (_formKey.currentState!.validate()) {
                         _addStringToList();///might have problem
-                     var docID= fireStore.collection("products").doc("pets").collection(firstItem).doc();
                         var fireData=BirdModelClass(
-                          key: firstItem,
-                          id: docID.id,
                           name: _nameController.text,
                           colors:_listOfColors,
                           talk: _talkController.text,
@@ -210,24 +207,19 @@ class _AddProductState extends State<AddProduct> {
                           age: _ageController.text,
                           price: double.parse(_priceController.text),
                         );
-                        clearConstructors();
+                        fireData.key=firstItem;
 
-                        docID.set(
-                             fireData.toFirebase(),SetOptions(merge: true)).then((value){
-                       // print(value.);
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context){
+                              return AddProductPic(fireData: fireData);}));
 
-                            firstItem=proList[0];
-                         setState(() {
-                         });
-                             ScaffoldMessenger.of(context).showSnackBar(
-                                 const SnackBar(content: Center(child: Text("data uploaded to server"))));
-                          }).catchError((err){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text(err.toString()))));///err.message !!!!!
-                      });
+                        //clearConstructors();
+
+
                       // Do something when the form is submitted
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text('Next'),
                 ),
 
 

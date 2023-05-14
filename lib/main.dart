@@ -30,7 +30,7 @@ Future <void> main() async{
   runApp(
       MultiProvider(
          providers: [
-        ChangeNotifierProvider<MyHomePageProvider>(create: (_)=>MyHomePageProvider()),
+        //ChangeNotifierProvider<MyHomePageProvider>(create: (_)=>MyHomePageProvider()),
         ChangeNotifierProvider<AppDrawerProvider>(create: (_)=>AppDrawerProvider()),
         ChangeNotifierProvider<WeatherProvider>(create: (_)=>WeatherProvider()),
         ChangeNotifierProvider<BirdProvider>(create: (_)=>BirdProvider()),

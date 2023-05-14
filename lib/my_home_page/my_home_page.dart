@@ -32,8 +32,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    Provider.of<MyHomePageProvider>(context, listen: false)
-        .initializemyHomePageModelClass();
+    // Provider.of<MyHomePageProvider>(context, listen: false)
+    //     .initializemyHomePageModelClass();
 
     double dynamicHeight = MediaQuery.of(context).size.height;
     double dynamicWidth = MediaQuery.of(context).size.width;
@@ -107,28 +107,25 @@ class _MyHomePageState extends State<MyHomePage> {
         ///Bottom navigation bar EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
-        body: Consumer<MyHomePageProvider>(
-            builder: (context, myHomePageProvider, index) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                ImageSlider(
-                    //context: context,
-                    //myHomePageProvider: myHomePageProvider
-                ),
-                ProductCategories(
-                ),
-                FlashSale(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageSlider(
+                  //context: context,
+                  //myHomePageProvider: myHomePageProvider
+              ),
+              ProductCategories(
+              ),
+              FlashSale(),
 
-                const Featured(),
-                Container(
-                  color: Colors.red,
-                  height: dynamicHeight*0.2,
-                ),
-              ],
-            ),
-          );
-        }),
+              const Featured(),
+              Container(
+                color: Colors.red,
+                height: dynamicHeight*0.2,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
