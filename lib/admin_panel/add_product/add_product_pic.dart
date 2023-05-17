@@ -10,9 +10,9 @@ import 'package:pet_friend/model_class/bird_model_class.dart';
 
 class AddProductPic extends StatefulWidget {
 
-  BirdModelClass fireData;
+   BirdModelClass fireData;
 
-   AddProductPic({Key? key,
+    AddProductPic({Key? key,
     required this.fireData,
   }) : super(key: key);
 

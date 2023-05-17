@@ -1,5 +1,7 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class BirdModelClass {
    String? key ;
   final String? id;
@@ -10,9 +12,31 @@ class BirdModelClass {
   final String? age;
   final double? price;
    final String? imgUrl;
-   List<String>? imgURL;
+   List<dynamic>? imgURL;
 
   BirdModelClass({this.key="bird",this.id, this.name, this.colors, this.talk, this.fly, this.age, this.price, this.imgUrl,this.imgURL});
+
+
+     fromFireStore(DocumentSnapshot<Map<String,dynamic>> snap){
+
+       final id=snap.id;
+       final data=snap.data();
+      print("${id}fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+      return
+        BirdModelClass(
+          id: id,
+          key: data?["key"],
+          price: data?["price"],
+        age: data?["age"],
+        fly: data?["fly"],
+        talk: data?["talk"],
+          name: data?["name"],
+         colors: data?["colors"]is Iterable ? List.from(data?['colors']) : null,
+        imgURL: data?["imgURL"],
+          ///colors and imgURL both are ok
+      );
+    }
+
 
   Map<String, dynamic> toFirebase() {
     return {
@@ -29,12 +53,36 @@ class BirdModelClass {
   }
 }
 
+
+
+
 class BirdRepository {
-  final List<BirdModelClass> birds = [
-    BirdModelClass( name: 'budgerigar',colors:  ['blue', 'white', 'black'], talk: "can't talk",fly: 'can fly',age: '9 months', price: 75,imgUrl: 'assets/bird_pics/budgerigar.jpg'),
-    BirdModelClass( name: 'parrot', colors: ['yellow', 'green', 'blue', 'white', 'red'],talk: "can talk",fly: 'can fly',age: '6 months',price:  75,imgUrl:  'assets/bird_pics/parrot.jpg'),
-    BirdModelClass( name: 'owl', colors: ['brown', 'white'],talk: "can't talk", fly: "can't fly",age: '1 year 2 months',price:  75,imgUrl: 'assets/bird_pics/owl.jpg'),
-    BirdModelClass( name: 'blue jay',colors:  ['blue', 'white', 'black'],talk:  "can't talk",fly:  "can't fly", age: '1 year', price: 75,imgUrl: 'assets/bird_pics/blue jay.jpg'),
-    BirdModelClass( name: 'falcon',colors:  ['brown', 'black'],talk: "can't talk",fly:  'can fly',age: '2 years', price: 75,imgUrl: 'assets/bird_pics/falcon.jpg'),
+  final _db=FirebaseFirestore.instance;
+
+   List<BirdModelClass> _birds = [
+    BirdModelClass(key: "bird", name: 'budgerigar',colors:  ['blue', 'white', 'black'], talk: "can't talk",fly: 'can fly',age: '9 months', price: 75,imgURL: ['assets/bird_pics/budgerigar.jpg']),
+    BirdModelClass( key: "bird",name: 'parrot', colors: ['yellow', 'green', 'blue', 'white', 'red'],talk: "can talk",fly: 'can fly',age: '6 months',price:  75,imgURL: ['assets/bird_pics/parrot.jpg']),
+    BirdModelClass( key: "bird",name: 'owl', colors: ['brown', 'white'],talk: "can't talk", fly: "can't fly",age: '1 year 2 months',price:  75,imgURL: ['assets/bird_pics/owl.jpg']),
+    BirdModelClass( key: "bird",name: 'blue jay',colors:  ['blue', 'white', 'black'],talk:  "can't talk",fly:  "can't fly", age: '1 year', price: 75,imgURL: ['assets/bird_pics/blue jay.jpg']),
+    BirdModelClass( key: "bird",name: 'falcon',colors:  ['brown', 'black'],talk: "can't talk",fly:  'can fly',age: '2 years', price: 75,imgURL: ['assets/bird_pics/falcon.jpg']),
   ];
+
+  Future<List<BirdModelClass>> getFireData() async{
+    List<BirdModelClass> snap=[];
+    try {
+      final tempJson = await _db.collection("products").doc("pets").collection(
+          "bird").get();
+        for (int i=0;i<tempJson.docs.length;i++) {
+           var t=BirdModelClass().fromFireStore(tempJson.docs[i]);
+           snap.add(t);
+        }
+    }catch(e){
+      print("*********************************************ERROR***************************************");
+      print(e.toString());
+    }
+    _birds +=snap;
+      return _birds;
+  }
+
+
 }

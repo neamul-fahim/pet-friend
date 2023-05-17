@@ -34,6 +34,7 @@ class PetsCategoryGridItem extends StatelessWidget {
       ),
       child: Column(
         children: [
+          pets.imgURL[0].isEmpty?CircularProgressIndicator():
           Container( ///pic container
           //  color: Colors.blue,
             height: dynamicHeight*0.15,
@@ -41,7 +42,7 @@ class PetsCategoryGridItem extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
                 image: DecorationImage(
-                  image: AssetImage(pets.imgUrl),fit: BoxFit.fill,
+                  image: NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
 
                 )),),
 
@@ -51,7 +52,7 @@ class PetsCategoryGridItem extends StatelessWidget {
                  //color: Colors.blue,
                  child: FittedBox(
                    fit: BoxFit.scaleDown,
-                   child: pets.key=="birds"?
+                   child: pets.key=="bird"?
                    Text("${pets.name}",style: const TextStyle(fontSize: 15,),)
                        :Text("${pets.breed}",style: const TextStyle(fontSize: 15,),),
                  ),

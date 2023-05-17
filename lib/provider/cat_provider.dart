@@ -15,6 +15,6 @@ class CatProvider with ChangeNotifier{
 
       void initializeCatList (){
        _catList=CatRepository().cats;
-       notifyListeners();
+       //notifyListeners();
       }
   }
