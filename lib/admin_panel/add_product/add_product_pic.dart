@@ -10,7 +10,7 @@ import 'package:pet_friend/model_class/bird_model_class.dart';
 
 class AddProductPic extends StatefulWidget {
 
-   BirdModelClass fireData;
+   dynamic fireData;
 
     AddProductPic({Key? key,
     required this.fireData,
@@ -89,12 +89,6 @@ class _AddProductPicState extends State<AddProductPic> {
                             setState(() {
                               listOfPic.add(io.File(image.path));
                             });
-                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                            print(image.name);
-                            print(image.path);
-                            print(image.mimeType);
-                            print(listOfPic.length);
-                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
                           } ,
                           icon: const Icon(Icons.camera_alt),
@@ -104,7 +98,7 @@ class _AddProductPicState extends State<AddProductPic> {
                           onPressed:()async{
                             Navigator.of(context).pop();
                             final ImagePicker picker = ImagePicker();
-                            final List<XFile> images = await picker.pickMultiImage();
+                            final List<XFile> images = await picker.pickMultiImage(imageQuality:50,);
                          setState(() {
                            listOfPic+=images.map((e) => io.File(e.path)).toList();
 
@@ -134,38 +128,31 @@ class _AddProductPicState extends State<AddProductPic> {
                       setState(() {
                         isUploading=true;
                       });
+
+                      var docID= fireStore.collection("products").doc(widget.fireData.category).collection(widget.fireData.key).doc();
+
                       for(int i=0;i<(listOfPic.length>5?5:listOfPic.length);i++) {
-                        var temp=firebaseStorage.child("pet_friend").child("products").child("pic${i+1}");
+                        var temp=firebaseStorage.child("pet_friend").child("products").child(widget.fireData.key!).child(docID.id).child("pic${i+1}");
                       await temp.putFile(listOfPic[i]);
                          var imgURL=await temp.getDownloadURL();
                         storageRef.add(imgURL);
-
                       }
-                      print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                      print(storageRef[0]);
-                      print(widget.fireData.name);
-                      print(widget.fireData.key);
-                      print(widget.fireData.imgURL);
 
-                      print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                       widget.fireData.imgURL=storageRef;
-
-                      var docID= fireStore.collection("products").doc("pets").collection(widget.fireData.key!).doc();
-
+                          widget.fireData.id=docID.id;
                                await docID.set(
                          widget.fireData.toFirebase(),SetOptions(merge: true)).then((value){
-                        // print(value.);
-
-                        // setState(() {
-                        //   firstItem=proList[0];
-                        // });
 
                                  setState(() {
                                    isUploading=false;
                                  });
-                        ScaffoldMessenger.of(context).showSnackBar(
 
-                            const SnackBar(content: Center(child: Text("data uploaded to server"))));
+
+                                 ScaffoldMessenger.of(context).clearSnackBars();
+
+                                 ScaffoldMessenger.of(context).showSnackBar(
+                             SnackBar(content: Center(child: Text("data uploaded to server"))));
+
                       }).catchError((err){
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text(err.toString()))));///err.message !!!!!
                       });
@@ -173,9 +160,6 @@ class _AddProductPicState extends State<AddProductPic> {
                       setState(() {
                         listOfPic.clear();
                       });
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(duration: Duration(seconds: 2),content: Text("Saved")));
                     },
 
                     child: const Text("Save data")),

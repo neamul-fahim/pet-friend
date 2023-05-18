@@ -28,7 +28,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<AppDrawerProvider>(context,listen: false).initializeAppDrawerModelClass();
+    //Provider.of<AppDrawerProvider>(context,listen: false).initializeAppDrawerModelClass();
 
     double dynamicHeight=MediaQuery.of(context).size.height;
     double dynamicWidth=MediaQuery.of(context).size.width;

@@ -24,8 +24,7 @@ class BirDetailsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Column(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
@@ -37,7 +36,7 @@ class BirDetailsForm extends StatelessWidget {
             ),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please name';
+                return 'Please enter your name';
               }
               return null;
             },

@@ -13,8 +13,8 @@ class CatProvider with ChangeNotifier{
        return [..._catList];
       }
 
-      void initializeCatList (){
-       _catList=CatRepository().cats;
+       Future<void>initializeCatList ()async{
+       _catList=await CatRepository().getFireData();
        //notifyListeners();
       }
   }

@@ -3,6 +3,7 @@
 
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,10 @@ class PetsCategoryGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///print("${pets.key}++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+   var ImageType="asset";
+     var temp=pets.imgURL[0];
+     if(temp[0]=="h" && temp[1]=="t" && temp[2]=="t" && temp[3]=="p") ImageType="network";
 
       var cart=Provider.of<CartProvider>(context);
     double dynamicHeight =MediaQuery.of(context).size.height;
@@ -29,12 +33,13 @@ class PetsCategoryGridItem extends StatelessWidget {
        // width: dynamicWidth*0.9,
       decoration: BoxDecoration(
         // color: Colors.yellow,
-        border:Border.all(color:Colors.teal  )
+        border:Border.all(color:Colors.teal)
 
       ),
       child: Column(
         children: [
           pets.imgURL[0].isEmpty?CircularProgressIndicator():
+          ImageType=="network"?
           Container( ///pic container
           //  color: Colors.blue,
             height: dynamicHeight*0.15,
@@ -42,7 +47,17 @@ class PetsCategoryGridItem extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
                 image: DecorationImage(
-                  image: NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
+                  image:CachedNetworkImageProvider(pets.imgURL[0],),fit: BoxFit.fill,
+                  //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
+                )),)
+          : Container( ///pic container
+            //  color: Colors.blue,
+            height: dynamicHeight*0.15,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
+                image: DecorationImage(
+                  image: AssetImage(pets.imgURL[0]),fit: BoxFit.fill,
 
                 )),),
 

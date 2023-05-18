@@ -7,6 +7,9 @@ import 'package:pet_friend/admin_panel/add_product/bird_details_form.dart';
 import 'package:pet_friend/admin_panel/add_product/cat_details_form.dart';
 import 'package:pet_friend/admin_panel/add_product/dog_details_form.dart';
 import 'package:pet_friend/model_class/bird_model_class.dart';
+import 'package:pet_friend/model_class/cat_model_class.dart';
+
+import '../../model_class/dog_model_class.dart';
 
 class AddProduct extends StatefulWidget {
 
@@ -16,7 +19,11 @@ class AddProduct extends StatefulWidget {
   @override
   State<AddProduct> createState() => _AddProductState();
 }
-    List<String> proList=<String>["Select Category","bird","dog","cat","food","accessory"];
+    List<String> categoryList=<String>["Select Category","pets","food","accessory"]; String categoryListFirstItem=categoryList[0];
+
+   List<String> petsList=<String>["Select pet","bird","cat","dog"]; String petsListFirstItem=petsList[0];
+
+
 class _AddProductState extends State<AddProduct> {
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +36,6 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController breedController = TextEditingController();
   final TextEditingController trainedController = TextEditingController();
 
-  List<String> _listOfColors = [];
 
   @override
   void dispose() {
@@ -55,6 +61,8 @@ class _AddProductState extends State<AddProduct> {
     trainedController.clear();
   }
 
+
+  List<String> _listOfColors = [];
   void _addStringToList() {
     setState(() {
       var temp=colorsController.text;
@@ -66,7 +74,6 @@ class _AddProductState extends State<AddProduct> {
      ////////////////////////////////////////////////////////////////////////////
 
     final _formKey=GlobalKey<FormState>();
-   String firstItem=proList[0];
 
   @override
   Widget build(BuildContext context) {
@@ -81,33 +88,51 @@ class _AddProductState extends State<AddProduct> {
               key: _formKey,
               child: Column(
                 children: [
-                  /// drop down button for selecting product cat SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                  /// drop down button for selecting product category SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                   DropdownButtonFormField(
-
                     decoration: InputDecoration(
                         border:OutlineInputBorder()
                     ),
-                    value: firstItem,
+                    value: categoryListFirstItem,
                       validator: ((v){
                         if(v=="Select Category") return "select a valid option";
                          return null;
                       }),
-                      items:proList.map((e) => DropdownMenuItem(child: Text(e),
+                      items:categoryList.map((e) => DropdownMenuItem(child: Text(e),
                       value: e,)).toList() ,
                       onChanged:(v){
 
                         setState(() {
-                          firstItem=v.toString();
+                          categoryListFirstItem=v.toString();
                         });
                       } ),
+                  /// drop down button for selecting product category EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-                  /// drop down button for selecting product cat EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                  /// drop down button for selecting pets SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                  if(categoryListFirstItem=="pets")
+                  DropdownButtonFormField(
+                      decoration: InputDecoration(
+                          border:OutlineInputBorder()
+                      ),
+                      value: petsListFirstItem,
+                      validator: ((v){
+                        if(v=="Select Category") return "select a valid option";
+                        return null;
+                      }),
+                      items:petsList.map((e) => DropdownMenuItem(child: Text(e),
+                        value: e,)).toList() ,
+                      onChanged:(v){
+
+                        setState(() {
+                          petsListFirstItem=v.toString();
+                        });
+                      } ),
+                  /// drop down button for selecting pets EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
 
 
-
-                   if(firstItem=="bird")
+                  if(petsListFirstItem=="bird")
                     BirDetailsForm(
                         nameController: nameController,
                         colorsController: colorsController,
@@ -116,14 +141,14 @@ class _AddProductState extends State<AddProduct> {
                         ageController: ageController,
                         priceController: priceController),
 
-                if(firstItem=="cat")
+                if(petsListFirstItem=="cat")
                   CatDetailsForm(
                       breedController: breedController,
                       colorsController: colorsController,
                       trainedController: trainedController,
                       ageController: ageController,
                       priceController: priceController),
-                if(firstItem=="dog")
+                if(petsListFirstItem=="dog")
                   DogDetailsForm(
                       breedController: breedController,
                       colorsController: colorsController,
@@ -139,7 +164,7 @@ class _AddProductState extends State<AddProduct> {
                       if (_formKey.currentState!.validate()) {
                           _addStringToList();///might have problem
                           dynamic fireData;
-                          if(firstItem=="bird") {
+                          if(categoryListFirstItem=="pets" && petsListFirstItem=="bird") {
                              fireData = BirdModelClass(
                               name: nameController.text,
                               colors: _listOfColors,
@@ -148,8 +173,35 @@ class _AddProductState extends State<AddProduct> {
                               age: ageController.text,
                               price: double.parse(priceController.text),
                             );
-                            fireData.key = firstItem;
+                            fireData.category = categoryListFirstItem;
+                            fireData.key=petsListFirstItem;
+
                           }
+                          if(categoryListFirstItem=="pets" && petsListFirstItem=="cat"){
+                            fireData=CatModelClass(
+                              breed: breedController.text,
+                              colors: _listOfColors,
+                               trained: trainedController.text,
+                              age: ageController.text,
+                              price: double.parse(priceController.text),
+                            );
+                            fireData.category = categoryListFirstItem;
+                            fireData.key=petsListFirstItem;
+
+                          }
+                          if(categoryListFirstItem=="pets" && petsListFirstItem=="dog"){
+                            fireData=DogModelClass(
+                              breed: breedController.text,
+                              colors: _listOfColors,
+                               trained: trainedController.text,
+                              age: ageController.text,
+                              price: double.parse(priceController.text),
+                            );
+                            fireData.category = categoryListFirstItem;
+                            fireData.key=petsListFirstItem;
+
+                          }
+
 
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context){

@@ -56,9 +56,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: //AdminPanel(),
+       home: MyHomePage(),
        //TestScreen(),
-       FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
+       //FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
     );
   }
 }

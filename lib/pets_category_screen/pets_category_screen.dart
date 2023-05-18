@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_friend/pets_category_screen/pets_grid_item.dart';
 import 'package:provider/provider.dart';
-
 import '../filter_screen/filter_screen.dart';
 import '../provider/bird_provider.dart';
 import '../provider/cat_provider.dart';
@@ -18,11 +17,8 @@ class PetsCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
      final cats=Provider.of<CatProvider>(context); cats.initializeCatList();
-
      final birds=Provider.of<BirdProvider>(context); birds.initializeBirdList();
-
      final dogs=Provider.of<DogProvider>(context); dogs.initializeDogList();
-
      final filterPets=Provider.of<FilterProvider>(context);
 
      // Future<void>getData()async {
@@ -90,7 +86,7 @@ class PetsCategoryScreen extends StatelessWidget {
          ),
         ],
       ),
-      body: birds.birdList.length<6?Center(child: CircularProgressIndicator()):
+      body: //birds.birdList.length<6?Center(child: CircularProgressIndicator()):
       GridView.builder(
           itemCount: pets.length,
           gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(

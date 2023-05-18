@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_friend/product_categories/product_category_pic_and_name.dart';
 import 'package:provider/provider.dart';
 
 import '../pets_category_screen/pets_category_screen.dart';
@@ -21,7 +20,6 @@ class ProductCategories extends StatefulWidget {
   State<ProductCategories> createState() => _ProductCategoriesState();
 }
 
-  ProductCatPicAndName  productCatPicAndName=ProductCatPicAndName();
   // int i=0;
 
 

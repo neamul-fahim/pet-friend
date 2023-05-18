@@ -1,21 +1,15 @@
 
 
-
-
-
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/bird_provider.dart';
 import '../provider/cat_provider.dart';
 import '../provider/dog_provider.dart';
 import 'imaes_of_image_slider.dart';
 
+
 class ImageSlider extends StatefulWidget {
-
-
 
   @override
   State<ImageSlider> createState() => _ImageSliderState();
@@ -28,22 +22,24 @@ class ImageSlider extends StatefulWidget {
 class _ImageSliderState extends State<ImageSlider> {
   @override
   Widget build(BuildContext context) {
+
      final birds=Provider.of<BirdProvider>(context); birds.initializeBirdList();
      final cats=Provider.of<CatProvider>(context); cats.initializeCatList();
      final dogs=Provider.of<DogProvider>(context); dogs.initializeDogList();
 
-     List<List> petsObject=[birds.birdList,cats.catList,dogs.dogList];
+     List<List> petsObject=[birds.birdList];//,cats.catList,dogs.dogList];
      List<String> petImg=[];
 
      void createList(){
        for(int i=0;i<petsObject.length;i++){
            for(int j=0;j<petsObject[i].length-3;j++){
              var temp=petsObject[i];
-             petImg.add(temp[j].imgUrl);
+             petImg.add(temp[j].imgURL[0]);
              }
          }
      }
       createList();
+
     double dynamicHeight =MediaQuery.of(context).size.height;
     double dynamicWidth =MediaQuery.of(context).size.width;
 
