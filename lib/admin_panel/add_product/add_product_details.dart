@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/admin_panel/add_product/add_product_pic.dart';
 import 'package:pet_friend/admin_panel/add_product/bird_details_form.dart';
+import 'package:pet_friend/admin_panel/add_product/cat_details_form.dart';
+import 'package:pet_friend/admin_panel/add_product/dog_details_form.dart';
 import 'package:pet_friend/model_class/bird_model_class.dart';
 
 class AddProduct extends StatefulWidget {
@@ -24,6 +26,9 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController flyController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController breedController = TextEditingController();
+  final TextEditingController trainedController = TextEditingController();
+
   List<String> _listOfColors = [];
 
   @override
@@ -34,6 +39,8 @@ class _AddProductState extends State<AddProduct> {
     flyController.dispose();
     ageController.dispose();
     priceController.dispose();
+    breedController.dispose();
+    trainedController.dispose();
     super.dispose();
   }
 
@@ -44,6 +51,8 @@ class _AddProductState extends State<AddProduct> {
     flyController.clear();
     ageController.clear();
     priceController.clear();
+    breedController.clear();
+    trainedController.clear();
   }
 
   void _addStringToList() {
@@ -107,6 +116,21 @@ class _AddProductState extends State<AddProduct> {
                         ageController: ageController,
                         priceController: priceController),
 
+                if(firstItem=="cat")
+                  CatDetailsForm(
+                      breedController: breedController,
+                      colorsController: colorsController,
+                      trainedController: trainedController,
+                      ageController: ageController,
+                      priceController: priceController),
+                if(firstItem=="dog")
+                  DogDetailsForm(
+                      breedController: breedController,
+                      colorsController: colorsController,
+                      trainedController: trainedController,
+                      ageController: ageController,
+                      priceController: priceController),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: ElevatedButton(
@@ -114,15 +138,18 @@ class _AddProductState extends State<AddProduct> {
 
                       if (_formKey.currentState!.validate()) {
                           _addStringToList();///might have problem
-                          var fireData=BirdModelClass(
-                            name: nameController.text,
-                            colors:_listOfColors,
-                            talk: talkController.text,
-                            fly: flyController.text,
-                            age: ageController.text,
-                            price: double.parse(priceController.text),
-                          );
-                          fireData.key=firstItem;
+                          dynamic fireData;
+                          if(firstItem=="bird") {
+                             fireData = BirdModelClass(
+                              name: nameController.text,
+                              colors: _listOfColors,
+                              talk: talkController.text,
+                              fly: flyController.text,
+                              age: ageController.text,
+                              price: double.parse(priceController.text),
+                            );
+                            fireData.key = firstItem;
+                          }
 
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context){

@@ -1,43 +1,39 @@
 
+
+
 import 'package:flutter/material.dart';
 
+class DogDetailsForm extends StatelessWidget {
 
-class BirDetailsForm extends StatelessWidget {
-
-
-  final TextEditingController nameController;
+  final TextEditingController breedController;
   final TextEditingController colorsController;
-  final TextEditingController talkController;
-  final TextEditingController flyController;
+  final TextEditingController trainedController;
   final TextEditingController ageController;
   final TextEditingController priceController;
 
-   const BirDetailsForm({Key? key,
-    required this.nameController,
-     required this.colorsController,
-     required this.talkController,
-     required this.flyController,
-     required this.ageController,
-     required this.priceController,
-
+  const DogDetailsForm({Key? key,
+    required this.breedController,
+    required this.colorsController,
+    required this.trainedController,
+    required this.ageController,
+    required this.priceController
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return
-      Column(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: TextFormField(
-            controller: nameController,
+            controller: breedController,
             decoration: InputDecoration(
-              labelText: 'name',
+              labelText: 'breed',
               border: OutlineInputBorder(),
             ),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please name';
+                return 'Please breed';
               }
               return null;
             },
@@ -62,30 +58,14 @@ class BirDetailsForm extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: TextFormField(
-            controller: talkController,
+            controller: trainedController,
             decoration: InputDecoration(
-              labelText: 'YES if can talk or NO otherwise',
+              labelText: 'YES if trained NO otherwise',
               border: OutlineInputBorder(),
             ),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please provide info if can talk or not';
-              }
-              return null;
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: TextFormField(
-            controller: flyController,
-            decoration: InputDecoration(
-              labelText: 'YES if can fly or NO otherwise',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please provide info if can fly';
+                return 'Please provide info if trained or not';
               }
               return null;
             },
@@ -126,5 +106,6 @@ class BirDetailsForm extends StatelessWidget {
         ),
       ],
     );
+    ;
   }
 }
