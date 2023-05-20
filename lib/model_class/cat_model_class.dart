@@ -27,7 +27,7 @@ class CatModelClass{
          trained: data?["trained"],
          age: data?["age"],
          price: data?["price"],
-         imgURL: data?["imgURL"]is Iterable ? List.from(data?['imgURL']) : null,
+         imgURL: data?["imgURL"] is Iterable ? List.from(data?['imgURL']) : null,
        );
      }
 

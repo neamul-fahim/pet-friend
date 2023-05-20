@@ -15,6 +15,6 @@ class CatProvider with ChangeNotifier{
 
        Future<void>initializeCatList ()async{
        _catList=await CatRepository().getFireData();
-       //notifyListeners();
+      // notifyListeners();
       }
   }

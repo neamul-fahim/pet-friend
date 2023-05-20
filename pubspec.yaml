@@ -73,6 +73,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
      - assets/car_pics/
+     - assets/dummy_pic/
      - assets/bird_pics/
      - assets/cat_pics/
      - assets/dog_pics/

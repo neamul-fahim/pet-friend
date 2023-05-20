@@ -18,27 +18,49 @@ class ImageSlider extends StatefulWidget {
     ImagesOfImageSlider imagesOfImageSlider=ImagesOfImageSlider();
 
 
+  bool once=true;
+
+
+  List<String> petImg=[
+    'assets/dummy_pic/petsPow.jpg',
+    'assets/dummy_pic/petsPow.jpg',
+    'assets/dummy_pic/petsPow.jpg',
+    'assets/dummy_pic/petsPow.jpg',];
+
 
 class _ImageSliderState extends State<ImageSlider> {
   @override
   Widget build(BuildContext context) {
 
-     final birds=Provider.of<BirdProvider>(context); birds.initializeBirdList();
-     final cats=Provider.of<CatProvider>(context); cats.initializeCatList();
-     final dogs=Provider.of<DogProvider>(context); dogs.initializeDogList();
+     final birds=Provider.of<BirdProvider>(context);
+     final cats=Provider.of<CatProvider>(context);
+     final dogs=Provider.of<DogProvider>(context);
 
-     List<List> petsObject=[birds.birdList];//,cats.catList,dogs.dogList];
-     List<String> petImg=[];
+     Future<void> fun()async {
+       await birds.initializeBirdList();
+       await cats.initializeCatList();
+       await dogs.initializeDogList();
 
-     void createList(){
-       for(int i=0;i<petsObject.length;i++){
-           for(int j=0;j<petsObject[i].length-3;j++){
+
+       List<List> petsObject=[cats.catList,birds.birdList,dogs.dogList];
+       petImg=[];
+         for(int i=0;i<petsObject.length;i++){
+           for(int j=0;j<5;j++){  //petsObject[i].length
              var temp=petsObject[i];
              petImg.add(temp[j].imgURL[0]);
-             }
+           }
          }
+      setState(() {});
      }
-      createList();
+     if(once){
+       once=false;
+       fun();
+     }
+
+        // print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        // print(cats.catList.length);
+        // print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
 
     double dynamicHeight =MediaQuery.of(context).size.height;
     double dynamicWidth =MediaQuery.of(context).size.width;

@@ -45,6 +45,8 @@ Future <void> main() async{
   );
 }
 
+
+
 class ProductCategoryProviderProvider {
 }
 
@@ -54,6 +56,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    // final birds=Provider.of<BirdProvider>(context);
+    // final cats=Provider.of<CatProvider>(context);
+    // final dogs=Provider.of<DogProvider>(context);
+    //
+    // birds.initializeBirdList();
+    // cats.initializeCatList();
+    // dogs.initializeDogList();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
        home: MyHomePage(),
