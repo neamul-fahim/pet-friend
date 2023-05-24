@@ -2,18 +2,64 @@
 
 
  import 'package:flutter/cupertino.dart';
+import 'package:pet_friend/model_class/bird_model_class.dart';
 
  class CartProvider with ChangeNotifier{
 
-  final List<dynamic> _cartData=[];
+    List<List<dynamic>> _cartData=[];
 
-  List<dynamic> get cartData{
+  List<List<dynamic>> get cartData{
     return [..._cartData];
   }
 
+
+
+
   void addToCart(dynamic item) {
-    _cartData.add(item);
-    notifyListeners();
+      print("${_cartData.length} LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+    bool itemExist=false;
+    if (_cartData.isNotEmpty){
+      for (int i = 0; i <_cartData.length; i++) {
+       // print("${_cartData.length} LLLLLLLLLLLLLLLL 111111111111111111111111111111111111 LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+
+        dynamic temp = _cartData[i];
+       // print("${temp[0].toFirebase()} DDDD ${temp[1]} DDDD ${item.toFirebase()} DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+
+        if (temp[0].imgURL[0] == item.imgURL[0]) {
+          itemExist=true;
+
+         // print("${i}   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+          temp[1]++;
+          //notifyListeners();
+        }
+     }
+       }
+      if(!itemExist) {
+        //print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+        dynamic lst =[item,1];
+        _cartData.add(lst);
+      }
+      notifyListeners();
   }
 
-  }
+   void reduceItemCount(dynamic item){
+     for (int i = 0; i <_cartData.length; i++) {
+       dynamic temp = _cartData[i];
+       if (temp[0].imgURL[0] == item.imgURL[0]) {
+         temp[1]--;
+       }
+     }
+     notifyListeners();
+   }
+   void deleteItem(dynamic item){
+     for (int i = 0; i <_cartData.length; i++) {
+       dynamic temp = _cartData[i];
+       if (temp[0].imgURL[0] == item.imgURL[0]) {
+         _cartData.removeAt(i);
+       }
+     }
+     notifyListeners();
+   }
+
+ }

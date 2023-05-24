@@ -40,7 +40,7 @@ class PetsCategoryGridItem extends StatelessWidget {
         children: [
           pets.imgURL[0].isEmpty?CircularProgressIndicator():
           ImageType=="network"?
-          Container( ///pic container
+          Container( ///pic container for network image
           //  color: Colors.blue,
             height: dynamicHeight*0.15,
               width: double.infinity,
@@ -50,7 +50,7 @@ class PetsCategoryGridItem extends StatelessWidget {
                   image:CachedNetworkImageProvider(pets.imgURL[0],),fit: BoxFit.fill,
                   //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
                 )),)
-          : Container( ///pic container
+          : Container( ///pic container for asset image
             //  color: Colors.blue,
             height: dynamicHeight*0.15,
             width: double.infinity,

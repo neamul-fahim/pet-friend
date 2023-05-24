@@ -52,6 +52,7 @@ class _ImageSliderState extends State<ImageSlider> {
          }
       setState(() {});
      }
+
      if(once){
        once=false;
        fun();
