@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pet_friend/admin_panel/admin_panel.dart';
+import 'package:pet_friend/admin_panel/admin_panel_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../cart/cart_screen.dart';
@@ -90,7 +90,7 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                         height: 60,
                       ),
                       /// Drawer options SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                      drawerProperty(Icons.shopping_cart, "Cart", context, () => Cart()),
+                      if(FirebaseAuth.instance.currentUser!=null)drawerProperty(Icons.shopping_cart, "Cart", context, () => Cart()),
                       drawerProperty(Icons.home_rounded, 'Home',context,()=>MyHomePage()),
                       drawerProperty(Icons.add_circle, 'Add Post',context,()=>MyHomePage()),
                       drawerProperty(Icons.notifications_active, 'Notification',context,()=>MyHomePage()),

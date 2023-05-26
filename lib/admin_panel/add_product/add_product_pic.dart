@@ -140,6 +140,7 @@ class _AddProductPicState extends State<AddProductPic> {
 
                       widget.fireData.imgURL=storageRef;
                           widget.fireData.id=docID.id;
+                          widget.fireData.firebasePath="products/${widget.fireData.category}/${widget.fireData.key}/${docID.id}";
                                await docID.set(
                          widget.fireData.toFirebase(),SetOptions(merge: true)).then((value){
 

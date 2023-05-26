@@ -6,6 +6,7 @@ class DogModelClass{
   String? category;
   String? key;
   String?  id;
+  String? firebasePath;
   final String?  breed;
   final List<String>?  colors;
   final String? trained;
@@ -13,7 +14,7 @@ class DogModelClass{
   final double?  price;
   List<String>? imgURL;
 
-  DogModelClass({this.category,this.key='dog',this.id, this.breed, this.colors,this.trained, this.age,this.price,this.imgURL});
+  DogModelClass({this.category,this.key='dog',this.id,this.firebasePath,this.breed, this.colors,this.trained, this.age,this.price,this.imgURL});
 
 
   factory DogModelClass.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snap){
@@ -23,6 +24,7 @@ class DogModelClass{
       category: data?["category"],
       key: data?["key"],
       id: data?["id"], //id
+      firebasePath: data?["firebasePath"],
       breed: data?["breed"],
       colors: data?["colors"] is Iterable ? List.from(data?['colors']) : null,
       trained: data?["trained"],
@@ -38,6 +40,7 @@ class DogModelClass{
       if(category!=null) "category":category,
       if(key!=null) "key":key,
       if(id!=null) "id":id,
+      if(firebasePath!=null) "firebasePath":firebasePath,
       if(breed!=null) "breed":breed,
       if(colors!=null) "colors":colors,
       if(trained!=null) "trained":trained,

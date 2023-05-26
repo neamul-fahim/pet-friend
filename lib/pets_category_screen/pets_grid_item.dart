@@ -4,8 +4,11 @@
 
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_friend/model_class/cart_model_class.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/cart_provider.dart';
@@ -13,8 +16,11 @@ import '../provider/cart_provider.dart';
 class PetsCategoryGridItem extends StatelessWidget {
 
   final dynamic pets;
-  const PetsCategoryGridItem({Key? key,this.pets}) : super(key: key);
+   PetsCategoryGridItem({Key? key,this.pets}) : super(key: key);
 
+  void sendToFirebase(dynamic pets){
+      CartModelClass(firebasePath: pets.firebasePath, );
+  }
 
 
   @override
@@ -86,16 +92,26 @@ class PetsCategoryGridItem extends StatelessWidget {
                   FittedBox(
                     fit: BoxFit.scaleDown,
                       child: IconButton(onPressed: (){
-                         cart.addToCart(pets);
+                        print("***************************************************${pets.firebasePath}************************");
+
+                        if(FirebaseAuth.instance.currentUser==null) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Center(
+                                  child: Text("Don't have an account"))));
+                          return;
+                        }
+                       // print("***************************************************${pets.firebasePath}************************");
+
+                        GetAndSetCartDataToFirebase().setCartDataToFirebase(pets, context);
+                        // if(pets.firebasePath!=null)
+                        // cart.addToCart(pets);
                       },
                           icon: Icon(Icons.shopping_cart_checkout_outlined,size: 40,))),
                   Spacer(),
                 ],
             ),
              )
-
-
-
       ],
       ),
     );

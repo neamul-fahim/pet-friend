@@ -1,8 +1,5 @@
 
-
-
- import 'package:flutter/cupertino.dart';
-import 'package:pet_friend/model_class/bird_model_class.dart';
+import 'package:flutter/material.dart';
 
  class CartProvider with ChangeNotifier{
 
@@ -11,9 +8,6 @@ import 'package:pet_friend/model_class/bird_model_class.dart';
   List<List<dynamic>> get cartData{
     return [..._cartData];
   }
-
-
-
 
   void addToCart(dynamic item) {
       print("${_cartData.length} LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");

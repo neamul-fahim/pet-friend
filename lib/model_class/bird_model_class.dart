@@ -6,6 +6,7 @@ class BirdModelClass {
    String? category;
    String? key ;
    String? id;
+   String? firebasePath;
   final String? name;
   final List<String>? colors;
   final String? talk;
@@ -15,10 +16,10 @@ class BirdModelClass {
 
    List<dynamic>? imgURL;
 
-  BirdModelClass({this.category,this.key="bird",this.id, this.name, this.colors, this.talk, this.fly, this.age, this.price,this.imgURL});
+  BirdModelClass({this.category,this.key="bird",this.id, this.firebasePath,this.name, this.colors, this.talk, this.fly, this.age, this.price,this.imgURL});
 
 
-     fromFireStore(DocumentSnapshot<Map<String,dynamic>> snap){
+    factory BirdModelClass.fromFirestore(DocumentSnapshot<Map<String,dynamic>> snap){
 
        final id=snap.id;
        final data=snap.data();
@@ -28,6 +29,7 @@ class BirdModelClass {
           category: data?["category"],
           id: id,
           key: data?["key"],
+          firebasePath: data?["firebasePath"],
           price: data?["price"],
         age: data?["age"],
         fly: data?["fly"],
@@ -45,6 +47,7 @@ class BirdModelClass {
       if(key!=null) "category":category,
       if(key!=null) "key":key,
       if(id != null) "id": id,
+      if(firebasePath!=null) "firebasePath":firebasePath,
       if(name != null) "name": name,
       if(colors != null) "colors": colors,
       if(talk != null) "talk": talk,
@@ -76,7 +79,7 @@ class BirdRepository {
       final tempJson = await _db.collection("products").doc("pets").collection(
           "bird").get();
         for (int i=0;i<tempJson.docs.length;i++) {
-           var t=BirdModelClass().fromFireStore(tempJson.docs[i]);
+           var t=BirdModelClass.fromFirestore(tempJson.docs[i]);
            snap.add(t);
         }
     }catch(e){

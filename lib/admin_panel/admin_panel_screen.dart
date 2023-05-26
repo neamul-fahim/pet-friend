@@ -1,14 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/admin_panel/add_product/add_product_details.dart';
 import 'package:pet_friend/admin_panel/add_product/add_product_pic.dart';
 import 'package:pet_friend/model_class/app_drawer_model_class.dart';
 
-  class AdminPanel extends StatelessWidget {
+   // var db;
+   // bool once=true;
+
+
+  class AdminPanel extends StatefulWidget {
     const AdminPanel({Key? key}) : super(key: key);
 
+  @override
+  State<AdminPanel> createState() => _AdminPanelState();
+}
 
+class _AdminPanelState extends State<AdminPanel> {
     @override
     Widget build(BuildContext context) {
+
+      // Future<void> fun()async {
+      //   var name = "pets";
+      //   var name1 = "bird";
+      //   var name2 = "ZkWIpxF8D3A1dk7Oj2aq";
+      //   var path = "products/$name/$name1/$name2";
+      //
+      //   db = await FirebaseFirestore.instance.doc(path).get();
+      //   once=false;
+      //   setState(() {
+      //   });
+      // }
+      // if(once) fun();
       var dSize=MediaQuery.of(context).size;
 
       return Scaffold(
@@ -100,7 +122,9 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
           backgroundColor: Colors.teal.shade100,
         ),
         body:
-        Container(color: Colors.white,)
+        Container(color: Colors.white,
+         // child: Text(db["price"].toString()),
+        )
       );
     }
-  }
+}

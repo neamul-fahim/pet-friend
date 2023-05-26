@@ -7,7 +7,7 @@
     import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_friend/admin_panel/admin_panel.dart';
+import 'package:pet_friend/admin_panel/admin_panel_screen.dart';
 import 'package:pet_friend/provider/app_drawer_provider.dart';
 import 'package:pet_friend/provider/bird_provider.dart';
 import 'package:pet_friend/provider/cart_provider.dart';
