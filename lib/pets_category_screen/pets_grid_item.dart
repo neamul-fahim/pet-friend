@@ -103,7 +103,7 @@ class PetsCategoryGridItem extends StatelessWidget {
                         }
                        // print("***************************************************${pets.firebasePath}************************");
 
-                        GetAndSetCartDataToFirebase().setCartDataToFirebase(pets, context);
+                        GetAndSetCartDataToFirebase().setCartDataToFirebase(pets, true,context);
                         // if(pets.firebasePath!=null)
                         // cart.addToCart(pets);
                       },
