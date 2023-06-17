@@ -37,6 +37,7 @@ class _AddProductPicState extends State<AddProductPic> {
     return Scaffold(
       body: Column(
         children: [
+          ///to show selected pictures SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
           Expanded(
             flex: 4,
             child: GridView.count(
@@ -52,6 +53,10 @@ class _AddProductPicState extends State<AddProductPic> {
               ],
             ),
           ),
+          ///to show selected pictures EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+
+         /// select picture from gallery or camera only 5 pics are allowed SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
           if(listOfPic.length<=5)
           Flexible(
             child: ElevatedButton.icon(
@@ -61,11 +66,10 @@ class _AddProductPicState extends State<AddProductPic> {
                     context: context, builder: (_){
                       var width=MediaQuery.of(context).size.width;
                   return AlertDialog(
-
                     title: Padding(
                       padding: EdgeInsets.only(left:width*0.6),
                       child: IconButton(
-                         icon: Icon(Icons.cancel),
+                         icon: const Icon(Icons.cancel),
                         onPressed: (){
                            Navigator.of(context).pop();
                         },
@@ -110,17 +114,23 @@ class _AddProductPicState extends State<AddProductPic> {
                   );
                 });
                 },
-                icon: Icon(Icons.camera_alt
+                icon: const Icon(Icons.camera_alt
                 ),
                 label: const Text("Add image"),
             ),
           ),
+
+          /// select picture from gallery or camera only 5 pics are allowed EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+
+
+        /// "Save data" button for uploading data to firebase SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
           Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(top:40),
 
                 child:
-           isUploading?CircularProgressIndicator():
+                    isUploading?const CircularProgressIndicator():
                 ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
                     onPressed: ()async{
@@ -128,31 +138,54 @@ class _AddProductPicState extends State<AddProductPic> {
                       setState(() {
                         isUploading=true;
                       });
+                       print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+                      var docID;
+                      print(widget.fireData.category);
+                      if (widget.fireData.category=="pets") ///for pets
+                       docID= fireStore.collection("products").doc(widget.fireData.category).collection(widget.fireData.key).doc();
+                      else
+                        docID= fireStore.collection("products").doc(widget.fireData.category).collection("allTypes").doc();///for accessories and food
 
-                      var docID= fireStore.collection("products").doc(widget.fireData.category).collection(widget.fireData.key).doc();
+                      print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
 
-                      for(int i=0;i<(listOfPic.length>5?5:listOfPic.length);i++) {
-                        var temp=firebaseStorage.child("pet_friend").child("products").child(widget.fireData.key!).child(docID.id).child("pic${i+1}");
-                      await temp.putFile(listOfPic[i]);
-                         var imgURL=await temp.getDownloadURL();
+                      ///firebaseStorage pic upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                 for(int i=0;i<(listOfPic.length>5?5:listOfPic.length);i++) {
+                   var fireStorePath=firebaseStorage
+                       .child("pet_friend").child("products").child(widget.fireData.category!).child(docID.id).child("pic${i+1}");
+                        await fireStorePath.putFile(listOfPic[i]);
+                         var imgURL=await fireStorePath.getDownloadURL();
                         storageRef.add(imgURL);
                       }
+                      ///firebaseStorage pic upload EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
+                      print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
+
+
+                      /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                       widget.fireData.imgURL=storageRef;
                           widget.fireData.id=docID.id;
+                          if(widget.fireData.category=="pets")
                           widget.fireData.firebasePath="products/${widget.fireData.category}/${widget.fireData.key}/${docID.id}";
-                          print("88888888888888888888888888888888888888888888888888888888888888888888888888");
-                          print(widget.fireData.firebasePath);
-                          print(docID.path);
-                               await docID.set(
+
+                          else
+                            widget.fireData.firebasePath="products/${widget.fireData.category}/${"allTypes"}/${docID.id}";
+
+                      print("444444444444444444444444444444444444444444444444444444444444444444444444444444444444444");
+
+                      //print("add_product_pic 88888888888888888888888888888888888888888888888888888888888888888");
+                          //print(widget.fireData.firebasePath);
+                          //print(docID.path);
+                      await docID.set(
                          widget.fireData.toFirebase(),SetOptions(merge: true)).then((value){
+                           setState(() {
+                             isUploading=false;
+                             Navigator.pop(context);
+                           });
+                           /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                           print("55555555555555555555555555555555555555555555555555555555555555555555555555555555555");
 
-                                 setState(() {
-                                   isUploading=false;
-                                 });
 
-
-                                 ScaffoldMessenger.of(context).clearSnackBars();
+                           ScaffoldMessenger.of(context).clearSnackBars();
 
                                  ScaffoldMessenger.of(context).showSnackBar(
                              SnackBar(content: Center(child: Text("data uploaded to server"))));
@@ -168,6 +201,9 @@ class _AddProductPicState extends State<AddProductPic> {
 
                     child: const Text("Save data")),
               ))
+
+          /// "Save data" button for uploading data to firebase EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
         ],
       ),
     );

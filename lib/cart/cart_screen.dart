@@ -15,78 +15,74 @@ class Cart extends StatefulWidget {
 
   @override
   State<Cart> createState() => _CartState();
+
+
 }
 
 
 class _CartState extends State<Cart> {
 
-  bool once=true;
+  late ScaffoldMessengerState scaffoldMessengerState;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    scaffoldMessengerState=ScaffoldMessenger.of(context);
+  }
 
-  List<dynamic> cartData=[];
-  bool load=false;
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   print("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-  //   fun();
-  //   super.initState();
-  // }
   final db=FirebaseFirestore.instance;
-
   var uid=FirebaseAuth.instance.currentUser?.uid;
-
+  bool once=true;
+  bool clickAbsorb = false;
+  bool load=false;
+  List<dynamic> cartData=[];
 
   var item = CartModelClass();
 
-  Future <void> fun() async {
-    cartData=[];
-    print("${cartData.length}/////////////////////////////////111111111111//////////////////////////////////////");
 
 
-    var fireCartData = await db.collection("users").doc(uid).collection("cart").get();
-   print("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-   print("${fireCartData.docs.length}*************************************************************");
-   for(int i=0;i<fireCartData.docs.length;i++) {
-     item=CartModelClass();
-     var data=fireCartData.docs[i].data();
-
-     var path= await db.doc(data["firebasePath"]).get();
-     item.productQuantity=data["productQuantity"];
-     item.imgURL=path["imgURL"][0];
-     item.id=path["id"];
-     item.firebasePath=path["firebasePath"];
-     //print("${item.id}*****************************************************************************");
-
-     cartData.add(item);
-     print("${cartData.length}//////////////////////////////////////////////////////////////////////////////");
-   }
-    // if (value.data()?["imgURL"][0]=="h" && temp[1]=="t" && temp[2]=="t" && temp[3]=="p") ImageType="network";
-    once=false;
-    setState(() {
-      load=true;
-      print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-    });
-  }
 
 
   @override
   Widget build(BuildContext context) {
 
 
-  var cart=Provider.of<CartProvider>(context);
+    Future <void> fun() async {
+      cartData=[];
+
+      var fireCartData = await db.collection("users").doc(uid).collection("cart").get();
+      for(int i=0;i<fireCartData.docs.length;i++) {
+        var data=fireCartData.docs[i].data();
+
+        var path= await db.doc(data["firebasePath"]).get();
+        item=CartModelClass();
+
+        item.productQuantity=data["productQuantity"];
+        item.imgURL=path["imgURL"][0];
+        item.id=path["id"];
+        item.firebasePath=path["firebasePath"];
+
+        cartData.add(item);
+      }
+      once=false;
+      setState(() {
+        load=true;
+      });
+    }
+
+
     if(once)fun();
-   print("${cartData.length}LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
 
   return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
       ),
-      body: !load && cartData.isEmpty?
+      body: !load?
           const Center(child:CircularProgressIndicator() )
       :
           load && cartData.isEmpty?
-          const Center(child: Text("Empty"))
+          const Center(child: Text("Add something to the cart",style: TextStyle(fontSize: 25,color: Colors.black38),))
           :
       ListView.builder(
             itemCount: cartData.length,
@@ -117,47 +113,68 @@ class _CartState extends State<Cart> {
 
 
 
-                               Spacer(flex: 8,),
-                               IconButton(onPressed: (){
-                                 if(cartData[i].productQuantity>1)
-                                   GetAndSetCartDataToFirebase().setCartDataToFirebase(cartData[i],false, context)
-                                       .then((value) => setState(() {
-                                     once=true;load=false;
-                                   })
-                                   );                               },
-                                   icon: Icon(Icons.do_disturb_on_outlined,color: Colors.black,)),
+                               const Spacer(flex: 8),
+                               AbsorbPointer(
+                                 absorbing: clickAbsorb,
+                                 child: IconButton(onPressed: (){
+                                   setState(() {
+                                     load=false;
+                                     clickAbsorb=true;
+                                   });
+                                   if(cartData[i].productQuantity>1) {
+                                     GetAndSetCartDataToFirebase().setCartDataToFirebase(cartData[i],false, scaffoldMessengerState)
+                                         .then((value) {
+                                       clickAbsorb=false; fun();
+                                     });
+                                   }                       },
+                                     icon: const Icon(Icons.do_disturb_on_outlined,color: Colors.black,)),
+                               ),
+
+
 
                                Container(
 
-                                 child: Text(cartData[i].productQuantity.toString(),style: TextStyle(fontSize: 18),),
+                                 child: Text(cartData[i].productQuantity.toString(),style: const TextStyle(fontSize: 18),),
                                ),
-                           IconButton(onPressed: (){
-                             GetAndSetCartDataToFirebase().setCartDataToFirebase(cartData[i],true, context)
-                                 .then((value) => setState(() {
-                               print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-                               once=true;load=false;
-                             })
-                             );
 
-                           },
-                               icon: Icon(Icons.add_circle_outline,color: Colors.black,)),
 
-                           IconButton(onPressed:(){
-                             GetAndSetCartDataToFirebase().DeleteCartItem(cartData[i])
-                                 .then((_)
-                                 {
-                                   ScaffoldMessenger.of(context).clearSnackBars();
-                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Item deleted")));
-                                   setState(() {
-                                     once=true;load=false;
+
+                           AbsorbPointer(
+                             absorbing: clickAbsorb,
+                             child: IconButton(onPressed: (){
+                               setState(() {
+                                 load=false;
+                                 clickAbsorb=true;
+                               });
+
+                               setState(() {
+                               GetAndSetCartDataToFirebase().setCartDataToFirebase(cartData[i],true, scaffoldMessengerState)
+                                   .then((value) {
+                                     clickAbsorb=false; fun();
                                    });
+                               });
+                             },
+                                 icon: const Icon(Icons.add_circle_outline,color: Colors.black,)),
+                           ),
 
-                                 }
-                             );
-                           },
-                               icon: Icon(Icons.delete,color: Colors.red,)),
 
-                           Spacer(flex: 1),
+
+                           AbsorbPointer(
+                             absorbing: clickAbsorb,
+                             child: IconButton(onPressed:(){
+                               setState(() {
+                                 load=false;
+                                 clickAbsorb=true;
+                               });
+                               GetAndSetCartDataToFirebase().DeleteCartItem(cartData[i],scaffoldMessengerState)
+                                   .then((value) {
+                                     clickAbsorb=false; fun();
+                               });
+                             },
+                                 icon: const Icon(Icons.delete,color: Colors.red,)),
+                           ),
+
+                           const Spacer(flex: 1),
                          ],
                        ),
                   ),

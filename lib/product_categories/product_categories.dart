@@ -2,9 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_friend/category_screens/accessory_category_screen.dart';
+import 'package:pet_friend/category_screens/food_category_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../pets_category_screen/pets_category_screen.dart';
+import '../category_screens/pets_category_screen.dart';
 import '../provider/product_category_provider.dart';
 import 'custom_circle_container.dart';
 
@@ -74,9 +76,17 @@ class ProductCategories extends StatefulWidget {
                              for(int i=0;i<productCat.categoryData.length;i++)
                           InkWell(
                             onTap: (){
-                              if(productCat.categoryData[i].name=='Pets')
+                              if(productCat.categoryData[i].name=="Pets")
                               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                                 return PetsCategoryScreen();
+                              }));
+                              if(productCat.categoryData[i].name=="Food")
+                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                                return FoodCategoryScreen();
+                              }));
+                              if(productCat.categoryData[i].name=="Accessory")
+                              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                                return AccessoryCategoryScreen();
                               }));
 
                             },

@@ -23,14 +23,16 @@ class ImageSlider extends StatefulWidget {
 
   List<String> petImg=[
     'assets/dummy_pic/petsPow.jpg',
-    'assets/dummy_pic/petsPow.jpg',
-    'assets/dummy_pic/petsPow.jpg',
-    'assets/dummy_pic/petsPow.jpg',];
+    ];
 
 
 class _ImageSliderState extends State<ImageSlider> {
   @override
   Widget build(BuildContext context) {
+
+    var ImageType="asset";
+    var temp=petImg[0];
+    if(temp[0]=="h" && temp[1]=="t" && temp[2]=="t" && temp[3]=="p") ImageType="network";
 
      final birds=Provider.of<BirdProvider>(context);
      final cats=Provider.of<CatProvider>(context);
@@ -43,18 +45,24 @@ class _ImageSliderState extends State<ImageSlider> {
 
 
        List<List> petsObject=[cats.catList,birds.birdList,dogs.dogList];
-       petImg=[];
-         for(int i=0;i<petsObject.length;i++){
-           for(int j=0;j<5;j++){  //petsObject[i].length
-             var temp=petsObject[i];
+       int len=cats.catList.length+birds.birdList.length+dogs.dogList.length;
+       print("${len}LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+       if(len!=0) {
+         petImg = [];
+         for (int i = 0; i < petsObject.length; i++) {
+           int l=petsObject[i].length;
+           for (int j = 0; j < l; j++) { //petsObject[i].length
+             var temp = petsObject[i];
              petImg.add(temp[j].imgURL[0]);
            }
          }
-      setState(() {});
+         setState(() {
+           once=false;
+         });
+       }
      }
 
      if(once){
-       once=false;
        fun();
      }
 
@@ -90,16 +98,28 @@ class _ImageSliderState extends State<ImageSlider> {
             shadowColor: Colors.teal,
             elevation: 50,
             borderRadius: BorderRadius.circular(20),
-            child: Container(
+            child: ImageType=="network"?
+                  Container(
               decoration: BoxDecoration(border: Border.all(width:0.1, color: Colors.black),
                 borderRadius: BorderRadius.circular(20),
                 //color: Colors.red,
                   image: DecorationImage(
-                  image: AssetImage(index),
+                  image: NetworkImage(index),
                     fit: BoxFit.cover,
               )
               ),
-            ),
+            )
+                : Container(
+              decoration: BoxDecoration(border: Border.all(width:0.1, color: Colors.black),
+                  borderRadius: BorderRadius.circular(20),
+                  //color: Colors.red,
+                  image: DecorationImage(
+                    image: AssetImage(index),
+                    fit: BoxFit.cover,
+                  )
+              ),
+            )
+
           )
           ).toList(),
         ),

@@ -43,30 +43,39 @@ class CartModelClass{
      final _db=FirebaseFirestore.instance;
      final uid=FirebaseAuth.instance.currentUser?.uid;
 
-     Future setCartDataToFirebase(dynamic item ,bool increDecre,BuildContext context)async{
+     Future <void> setCartDataToFirebase(dynamic item ,bool increDecre,ScaffoldMessengerState scaffoldMessengerState)async{
        var path=_db.collection("users").doc(uid).collection("cart").doc(item.id);
-        var cartData=await path.get();
+
+       var cartData=await path.get();///if i press the plus button twice the first press will execute till (var cartData=await path.get();) and will wait for the await call to finish in the meantime the second click will execute and will execute till it's own (var cartData=await path.get();) ***here both the clicks holds the same value at cartData variable*** and now both clicks increments the cartData quantity so both writs the same incremented data on firebase
         int quantity=1;
-        if(cartData.exists) {
-           quantity = cartData["productQuantity"];
-         if(increDecre) quantity++;
-          else if(quantity>1)quantity--;
+
+       if(cartData.exists) {
+
+         quantity = cartData["productQuantity"];
+         if(increDecre) {quantity++;} else if(quantity>1) {quantity--;}
 
         }
-        print("car_model_class*****************************************${item.firebasePath}************************");
+        //print("car_model_class*****************************************${item.firebasePath}************************");
           var fireData=CartModelClass(firebasePath: item.firebasePath,productQuantity:quantity);
-          await _db.collection("users").doc(uid).collection("cart").doc(item.id).set(fireData.toFirebase())
-              .then((response){
-                ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text("item added to cart"))));
-          }).catchError((e){
-            print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${e.toString()}eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-          });
+
+         await _db.collection("users").doc(uid).collection("cart").doc(item.id).set(fireData.toFirebase());
+        scaffoldMessengerState.clearSnackBars();
+        if(increDecre) {
+          scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item added to cart"))));
+        } else{
+          scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item reduced from cart"))));
+        }
+
+
+
      }
 
-     Future DeleteCartItem (dynamic item)async{
+
+     Future DeleteCartItem (dynamic item,ScaffoldMessengerState scaffoldMessengerState)async{
        try {
          await _db.collection("users").doc(uid).collection("cart").doc(item.id).delete();
+         scaffoldMessengerState.clearSnackBars();
+         scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("Item deleted"))));
        }catch(e){
          print("car_model_classEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE${e.toString()}EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
        }

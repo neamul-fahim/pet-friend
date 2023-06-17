@@ -16,7 +16,7 @@ class BirdProvider with ChangeNotifier{
 
    Future<void> initializeBirdList()async {
      _birdList=await BirdRepository().getFireData();
-    // notifyListeners();
+     //notifyListeners();
    }
 
 

@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:pet_friend/pets_category_screen/pets_grid_item.dart';
+import 'package:pet_friend/category_screens/grid_item.dart';
 import 'package:provider/provider.dart';
 import '../filter_screen/filter_screen.dart';
 import '../provider/bird_provider.dart';
@@ -9,28 +9,41 @@ import '../provider/cat_provider.dart';
 import '../provider/dog_provider.dart';
 import '../provider/filter_provider.dart';
 
-class PetsCategoryScreen extends StatelessWidget {
-  const PetsCategoryScreen({Key? key}) : super(key: key);
+class PetsCategoryScreen extends StatefulWidget {
+
+  PetsCategoryScreen({Key? key}) : super(key: key);
+
+  @override
+  State<PetsCategoryScreen> createState() => _PetsCategoryScreenState();
+}
+
+class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
+  bool once=true; bool loadedData=false;
 
 
   @override
   Widget build(BuildContext context) {
 
-     final cats=Provider.of<CatProvider>(context); cats.initializeCatList();
-     final birds=Provider.of<BirdProvider>(context); birds.initializeBirdList();
-     final dogs=Provider.of<DogProvider>(context); dogs.initializeDogList();
+     final cats=Provider.of<CatProvider>(context);
+     final birds=Provider.of<BirdProvider>(context);
+     final dogs=Provider.of<DogProvider>(context);
      final filterPets=Provider.of<FilterProvider>(context);
 
-     // Future<void>getData()async {
-     //   cats.initializeCatList();
-     //   await birds.initializeBirdList();
-     //   dogs.initializeDogList();
-     // }
-     // getData();
+     Future<void>getData()async {
+      await cats.initializeCatList();
+       await birds.initializeBirdList();
+      await dogs.initializeDogList();
+
+      setState(() {
+        once=false;
+        loadedData=true;
+      });
+     }
+    if (once) getData();
 
 
-     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-     print(birds.birdList.length);
+     //print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // print(birds.birdList.length);
 
      /// List <dynamic> pets=[...cats.catList,...birds.birdList,...dogs.dogList]; /// this also works instead of the mixInPetsList function but it doesn't mix the list items
      List <dynamic> pets=[];
@@ -40,7 +53,7 @@ class PetsCategoryScreen extends StatelessWidget {
        int dogsSize=dogs.dogList.length;
        int birdsSize=birds.birdList.length;
        if(birdsSize==0){
-         print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+         //print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
        }
        int catsSize=cats.catList.length;
        int totalC=dogsSize+birdsSize+catsSize;
@@ -86,7 +99,10 @@ class PetsCategoryScreen extends StatelessWidget {
          ),
         ],
       ),
-      body: //birds.birdList.length<6?Center(child: CircularProgressIndicator()):
+      body: !loadedData && pets.isEmpty?const Center(child: CircularProgressIndicator())
+          :
+           loadedData && pets.isEmpty?const Center(child: Text("Empty",style: TextStyle(fontSize: 25,color: Colors.black38),))
+          :
       GridView.builder(
           itemCount: pets.length,
           gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
@@ -98,7 +114,7 @@ class PetsCategoryScreen extends StatelessWidget {
           itemBuilder: (context,item){
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: PetsCategoryGridItem(pets: pets[item],),
+              child: GridItem(pets: pets[item],),
             );///Image.asset(pets[item].imgUrl);
           }),
     );

@@ -6,6 +6,7 @@ class CatModelClass{
   String? key;
   String? id;
   String? firebasePath;
+  String? name;
   final String? breed;
   final List<String>? colors;
   final String? trained;
@@ -13,13 +14,14 @@ class CatModelClass{
   final double?  price;
   List<String>? imgURL;
 
-  CatModelClass({this.category,this.key="cat",this.id,this.firebasePath, this.breed, this.colors, this.trained,this.age,this.price,this.imgURL});
+  CatModelClass({this.name,this.category,this.key="cat",this.id,this.firebasePath, this.breed, this.colors, this.trained,this.age,this.price,this.imgURL});
 
 
      factory CatModelClass.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snap){
          final id=snap.id;
          final data=snap.data();
        return CatModelClass(
+         name:data?["name"],
          category: data?["category"],
          key: data?["key"],
          id: data?["id"], //id
@@ -35,7 +37,9 @@ class CatModelClass{
 
 
   Map<String,dynamic> toFirebase() {
+    if(breed != null) name=breed;
     return {
+      if(name != null) "name": name,
       if(category != null) "category":category,
       if(key != null) "key": key,
       if(id != null) "id": id,
@@ -52,13 +56,14 @@ class CatModelClass{
 }
 
   class CatRepository{
-    List<CatModelClass> _cats= [
-   CatModelClass( breed: 'ragdoll',colors: ['white','black'] , trained:  'trained',age: '2 years 5 months',price: 100,imgURL: ['assets/cat_pics/ragdoll.jpg']),
-   CatModelClass( breed: 'british shorthair',colors: ['ash'] , trained:  'not trained',age: '2 years',price:  100,imgURL:['assets/cat_pics/british shorthair.jpeg']),
-   CatModelClass(breed: 'maine coon',colors: ['brown','black'] , trained: 'trained', age: '1 year',price: 100,imgURL: ['assets/cat_pics/maine coon.jpeg']),
-   CatModelClass(breed:  'persian',colors: ['brown','white'] , trained: 'not trained', age: '7 months',price: 100,imgURL: ['assets/cat_pics/persian.jpeg']),
-   CatModelClass( breed: 'siamese',colors: ['white','black'] , trained:  'trained',age: '1 year',price: 100,imgURL: ['assets/cat_pics/siamese.jpeg']),
-  ];
+    List<CatModelClass> _cats= [];
+  //   [
+  //  CatModelClass( breed: 'ragdoll',colors: ['white','black'] , trained:  'trained',age: '2 years 5 months',price: 100,imgURL: ['assets/cat_pics/ragdoll.jpg']),
+  //  CatModelClass( breed: 'british shorthair',colors: ['ash'] , trained:  'not trained',age: '2 years',price:  100,imgURL:['assets/cat_pics/british shorthair.jpeg']),
+  //  CatModelClass(breed: 'maine coon',colors: ['brown','black'] , trained: 'trained', age: '1 year',price: 100,imgURL: ['assets/cat_pics/maine coon.jpeg']),
+  //  CatModelClass(breed:  'persian',colors: ['brown','white'] , trained: 'not trained', age: '7 months',price: 100,imgURL: ['assets/cat_pics/persian.jpeg']),
+  //  CatModelClass( breed: 'siamese',colors: ['white','black'] , trained:  'trained',age: '1 year',price: 100,imgURL: ['assets/cat_pics/siamese.jpeg']),
+  // ];
 
       final _db=FirebaseFirestore.instance;
 

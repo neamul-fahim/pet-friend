@@ -13,7 +13,6 @@ class BirdModelClass {
   final String? fly;
   final String? age;
   final double? price;
-
    List<dynamic>? imgURL;
 
   BirdModelClass({this.category,this.key="bird",this.id, this.firebasePath,this.name, this.colors, this.talk, this.fly, this.age, this.price,this.imgURL});
@@ -44,7 +43,7 @@ class BirdModelClass {
 
   Map<String, dynamic> toFirebase() {
     return {
-      if(key!=null) "category":category,
+      if(category!=null) "category":category,
       if(key!=null) "key":key,
       if(id != null) "id": id,
       if(firebasePath!=null) "firebasePath":firebasePath,
@@ -62,16 +61,17 @@ class BirdModelClass {
 
 
 
-class BirdRepository {
+  class BirdRepository {
   final _db=FirebaseFirestore.instance;
 
-   List<BirdModelClass> _birds = [
-    BirdModelClass( key: "bird", name: 'budgerigar',colors:  ['blue', 'white', 'black'], talk: "can't talk",fly: 'can fly',age: '9 months', price: 75,imgURL: ['assets/bird_pics/budgerigar.jpg']),
-    BirdModelClass( key: "bird",name: 'parrot', colors: ['yellow', 'green', 'blue', 'white', 'red'],talk: "can talk",fly: 'can fly',age: '6 months',price:  75,imgURL: ['assets/bird_pics/parrot.jpg']),
-    BirdModelClass( key: "bird",name: 'owl', colors: ['brown', 'white'],talk: "can't talk", fly: "can't fly",age: '1 year 2 months',price:  75,imgURL: ['assets/bird_pics/owl.jpg']),
-    BirdModelClass( key: "bird",name: 'blue jay',colors:  ['blue', 'white', 'black'],talk:  "can't talk",fly:  "can't fly", age: '1 year', price: 75,imgURL: ['assets/bird_pics/blue jay.jpg']),
-    BirdModelClass( key: "bird",name: 'falcon',colors:  ['brown', 'black'],talk: "can't talk",fly:  'can fly',age: '2 years', price: 75,imgURL: ['assets/bird_pics/falcon.jpg']),
-  ];
+   List<BirdModelClass> _birds=[];
+  //  = [
+  //   BirdModelClass( key: "bird", name: 'budgerigar',colors:  ['blue', 'white', 'black'], talk: "can't talk",fly: 'can fly',age: '9 months', price: 75,imgURL: ['assets/bird_pics/budgerigar.jpg']),
+  //   BirdModelClass( key: "bird",name: 'parrot', colors: ['yellow', 'green', 'blue', 'white', 'red'],talk: "can talk",fly: 'can fly',age: '6 months',price:  75,imgURL: ['assets/bird_pics/parrot.jpg']),
+  //   BirdModelClass( key: "bird",name: 'owl', colors: ['brown', 'white'],talk: "can't talk", fly: "can't fly",age: '1 year 2 months',price:  75,imgURL: ['assets/bird_pics/owl.jpg']),
+  //   BirdModelClass( key: "bird",name: 'blue jay',colors:  ['blue', 'white', 'black'],talk:  "can't talk",fly:  "can't fly", age: '1 year', price: 75,imgURL: ['assets/bird_pics/blue jay.jpg']),
+  //   BirdModelClass( key: "bird",name: 'falcon',colors:  ['brown', 'black'],talk: "can't talk",fly:  'can fly',age: '2 years', price: 75,imgURL: ['assets/bird_pics/falcon.jpg']),
+  // ];
 
   Future<List<BirdModelClass>> getFireData() async{
     List<BirdModelClass> snap=[];
@@ -89,6 +89,4 @@ class BirdRepository {
     _birds +=snap;
       return [..._birds];
   }
-
-
 }

@@ -7,6 +7,7 @@ class DogModelClass{
   String? key;
   String?  id;
   String? firebasePath;
+  String? name;
   final String?  breed;
   final List<String>?  colors;
   final String? trained;
@@ -14,13 +15,14 @@ class DogModelClass{
   final double?  price;
   List<String>? imgURL;
 
-  DogModelClass({this.category,this.key='dog',this.id,this.firebasePath,this.breed, this.colors,this.trained, this.age,this.price,this.imgURL});
+  DogModelClass({ this.name,this.category,this.key='dog',this.id,this.firebasePath,this.breed, this.colors,this.trained, this.age,this.price,this.imgURL});
 
 
   factory DogModelClass.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snap){
     final id=snap.id;
     final data=snap.data();
     return DogModelClass(
+      name:data?["name"],
       category: data?["category"],
       key: data?["key"],
       id: data?["id"], //id
@@ -36,7 +38,9 @@ class DogModelClass{
 
 
   Map<String,dynamic> toFirebase(){
+    if(breed!=null) name=breed;
     return {
+      if(name != null) "name": name,
       if(category!=null) "category":category,
       if(key!=null) "key":key,
       if(id!=null) "id":id,
@@ -57,13 +61,14 @@ class DogModelClass{
 
   class DogRepository{
 
-   List<DogModelClass> _dogs= [
-  DogModelClass(breed: 'golden retriever' , colors: ['white','brown'], trained: 'trained',age: '1 year',price: 100,imgURL: ['assets/dog_pics/golden retriever.jpg']),
-  DogModelClass(breed: 'labrador' , colors: ['white','brown'], trained: 'not trained',age: '5 years', price: 100,imgURL: ['assets/dog_pics/labrador.jpg']),
-  DogModelClass(breed: 'siberian huskey' ,colors:  ['white','black'],trained: 'trained',age:  '5 months',price:  100,imgURL: ['assets/dog_pics/siberian huskey.jpeg']),
-  DogModelClass(breed: 'german shepherd' ,colors:  ['brown','black'],trained: 'not trained',age:  '3 years',price:  100,imgURL: ['assets/dog_pics/german shepherd.jpg']),
-  DogModelClass(breed: 'bull dog' , colors: ['white','black','brown'],trained: 'trained', age: '2 years', price: 100,imgURL: ['assets/dog_pics/bull dog.jpg']),
-    ];
+   List<DogModelClass> _dogs= [];
+  //  [
+  // DogModelClass(breed: 'golden retriever' , colors: ['white','brown'], trained: 'trained',age: '1 year',price: 100,imgURL: ['assets/dog_pics/golden retriever.jpg']),
+  // DogModelClass(breed: 'labrador' , colors: ['white','brown'], trained: 'not trained',age: '5 years', price: 100,imgURL: ['assets/dog_pics/labrador.jpg']),
+  // DogModelClass(breed: 'siberian huskey' ,colors:  ['white','black'],trained: 'trained',age:  '5 months',price:  100,imgURL: ['assets/dog_pics/siberian huskey.jpeg']),
+  // DogModelClass(breed: 'german shepherd' ,colors:  ['brown','black'],trained: 'not trained',age:  '3 years',price:  100,imgURL: ['assets/dog_pics/german shepherd.jpg']),
+  // DogModelClass(breed: 'bull dog' , colors: ['white','black','brown'],trained: 'trained', age: '2 years', price: 100,imgURL: ['assets/dog_pics/bull dog.jpg']),
+  //   ];
 
 
   final _db=FirebaseFirestore.instance;

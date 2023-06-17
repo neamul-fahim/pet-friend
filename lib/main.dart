@@ -8,12 +8,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/admin_panel/admin_panel_screen.dart';
+import 'package:pet_friend/category_screens/pets_category_screen.dart';
+import 'package:pet_friend/category_screens/grid_item.dart';
+import 'package:pet_friend/provider/accessory_provider.dart';
 import 'package:pet_friend/provider/app_drawer_provider.dart';
 import 'package:pet_friend/provider/bird_provider.dart';
 import 'package:pet_friend/provider/cart_provider.dart';
 import 'package:pet_friend/provider/cat_provider.dart';
 import 'package:pet_friend/provider/dog_provider.dart';
 import 'package:pet_friend/provider/filter_provider.dart';
+import 'package:pet_friend/provider/food_provider.dart';
 import 'package:pet_friend/provider/my_home_page_provider.dart';
 import 'package:pet_friend/provider/product_category_provider.dart';
 import 'package:pet_friend/signin_login/login.dart';
@@ -39,6 +43,8 @@ Future <void> main() async{
         ChangeNotifierProvider<ProductCategoryProvider>(create: (_)=>ProductCategoryProvider()),
         ChangeNotifierProvider<FilterProvider>(create: (_)=>FilterProvider()),
         ChangeNotifierProvider<CartProvider>(create: (_)=>CartProvider()),
+        ChangeNotifierProvider<AccessoryProvider>(create: (_)=>AccessoryProvider()),
+        ChangeNotifierProvider<FoodProvider>(create: (_)=>FoodProvider()),
 
     ],
        child: MyApp())
@@ -67,7 +73,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: MyHomePage(),
+       home:MyHomePage(),
        //TestScreen(),
        //FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
     );

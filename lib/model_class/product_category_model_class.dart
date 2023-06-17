@@ -12,7 +12,7 @@
        List<ProductCategoryModelClass> categories=[
          ProductCategoryModelClass('Pets', 'assets/bird_pics/blue jay.jpg'),
          ProductCategoryModelClass('Food', 'assets/bird_pics/blue jay.jpg'),
-            ProductCategoryModelClass('Accessories', 'assets/bird_pics/blue jay.jpg'),
+            ProductCategoryModelClass('Accessory', 'assets/bird_pics/blue jay.jpg'),
 
        ];
   }
