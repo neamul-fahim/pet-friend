@@ -35,12 +35,16 @@ dependencies:
   carousel_slider: ^4.2.1
   image_picker: ^0.8.7+5
   fluttertoast: ^8.2.1
+  #http: ^1.0.0
+
   http: ^0.13.5
   firebase_core: ^2.10.0
   firebase_auth: ^4.5.0
   cloud_firestore: ^4.7.0
   firebase_storage: ^11.2.0
   cached_network_image: ^3.2.3
+  flutter_sslcommerz: ^2.2.2-nullsafety.0
+  #flutter_bkash: ^0.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -49,6 +53,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

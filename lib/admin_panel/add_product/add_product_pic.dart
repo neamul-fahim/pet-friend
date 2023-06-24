@@ -57,7 +57,7 @@ class _AddProductPicState extends State<AddProductPic> {
 
 
          /// select picture from gallery or camera only 5 pics are allowed SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-          if(listOfPic.length<=5)
+          if(listOfPic.length<5)
           Flexible(
             child: ElevatedButton.icon(
               style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.teal[400]) ),
@@ -86,7 +86,7 @@ class _AddProductPicState extends State<AddProductPic> {
                             Navigator.of(context).pop();
 
                             final ImagePicker picker = ImagePicker();
-// Pick an image.
+
                             final XFile? image = await picker.pickImage(source: ImageSource.camera);
                             if(image==null) return;
 

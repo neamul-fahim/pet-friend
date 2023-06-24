@@ -43,11 +43,12 @@ class _ImageSliderState extends State<ImageSlider> {
        await cats.initializeCatList();
        await dogs.initializeDogList();
 
-
-       List<List> petsObject=[cats.catList,birds.birdList,dogs.dogList];
        int len=cats.catList.length+birds.birdList.length+dogs.dogList.length;
-       print("${len}LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+
        if(len!=0) {
+       List<List> petsObject=[cats.catList,birds.birdList,dogs.dogList];
+       print("${len}LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+
          petImg = [];
          for (int i = 0; i < petsObject.length; i++) {
            int l=petsObject[i].length;

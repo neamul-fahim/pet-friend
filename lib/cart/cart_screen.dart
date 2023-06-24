@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/model_class/cart_model_class.dart';
+import 'package:pet_friend/product_overview_screen/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/cart_provider.dart';
@@ -58,9 +59,11 @@ class _CartState extends State<Cart> {
         item=CartModelClass();
 
         item.productQuantity=data["productQuantity"];
-        item.imgURL=path["imgURL"][0];
+        item.imgURL=path["imgURL"];
         item.id=path["id"];
         item.firebasePath=path["firebasePath"];
+        item.name=path["name"];
+        item.price=path["price"];
 
         cartData.add(item);
       }
@@ -99,17 +102,35 @@ class _CartState extends State<Cart> {
                     child: Row(
                          children: [
 
-                           Container(///with out height and width the pic won't get displayed!!!!!!!!!!!!!!!!!!!
-                                margin: const EdgeInsets.all(10),
-                                height:50,
-                                  width: 50,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductOverviewScreen(product: cartData[i])));
+                             },
+                             child: Row(
+                               children: [
+                                 Container(///with out height and width the pic won't get displayed!!!!!!!!!!!!!!!!!!!
+                                   margin: const EdgeInsets.all(10),
+                                   height:50,
+                                   width: 50,
                                    decoration:  BoxDecoration(
-                                     borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(cartData[i].imgURL),
-                                        fit: BoxFit.fill,
-                                      )),
-                                ),
+                                       borderRadius: BorderRadius.circular(10),
+                                       image: DecorationImage(
+                                         image: CachedNetworkImageProvider(cartData[i].imgURL[0]),
+                                         fit: BoxFit.fill,
+                                       )),
+                                 ),
+                                 Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Text(cartData[i].name,style: TextStyle(fontSize: 18),),
+                                     Text("${cartData[i].price.toStringAsFixed(2)} TK"),
+                                   ],),
+
+                               ],
+                             )
+
+                           ),
+
 
 
 

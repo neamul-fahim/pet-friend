@@ -6,13 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CartModelClass{
-
+   String? name;
   String? firebasePath;
   int? productQuantity;
-  String? imgURL;
+  List<dynamic>? imgURL;
   String? id;
+  double? price;
 
-  CartModelClass({this.firebasePath, this.productQuantity,this.imgURL,this.id});
+  CartModelClass({this.name,this.firebasePath, this.productQuantity,this.imgURL,this.id});
 
        factory CartModelClass.fromFirestore(Map<String,dynamic> data){
 

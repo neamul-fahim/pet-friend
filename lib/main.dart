@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_friend/admin_panel/admin_panel_screen.dart';
 import 'package:pet_friend/category_screens/pets_category_screen.dart';
 import 'package:pet_friend/category_screens/grid_item.dart';
+import 'package:pet_friend/product_overview_screen/product_overview_screen.dart';
 import 'package:pet_friend/provider/accessory_provider.dart';
 import 'package:pet_friend/provider/app_drawer_provider.dart';
 import 'package:pet_friend/provider/bird_provider.dart';
@@ -74,7 +75,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
        home:MyHomePage(),
-       //TestScreen(),
        //FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
     );
   }

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_friend/model_class/cart_model_class.dart';
 import 'package:provider/provider.dart';
 
+import '../product_overview_screen/product_overview_screen.dart';
 import '../provider/cart_provider.dart';
 
 class GridItem extends StatefulWidget {
@@ -64,16 +65,23 @@ class _GridItemState extends State<GridItem> {
         children: [
           // widget.pets.imgURL[0].isEmpty?const CircularProgressIndicator():
           // ImageType=="network"?
-          Container( ///pic container for network image
-          //  color: Colors.blue,
-            height: dynamicHeight*0.15,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
-                image: DecorationImage(
-                  image:CachedNetworkImageProvider(widget.pets.imgURL[0],),fit: BoxFit.fill,
-                  //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
-                )),),
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                return ProductOverviewScreen(product:widget.pets);
+              }));
+            },
+            child: Container( ///pic container for network image
+            //  color: Colors.blue,
+              height: dynamicHeight*0.15,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
+                  image: DecorationImage(
+                    image:CachedNetworkImageProvider(widget.pets.imgURL[0],),fit: BoxFit.fill,
+                    //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
+                  )),),
+          ),
 
 
                Container(  ///text container
