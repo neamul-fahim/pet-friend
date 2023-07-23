@@ -16,6 +16,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 enum SdkType { TESTBOX, LIVE }
 
+
+
 class PaymentGateway extends StatefulWidget {
   @override
   _PaymentGatewayState createState() => _PaymentGatewayState();
@@ -24,7 +26,7 @@ class PaymentGateway extends StatefulWidget {
 class _PaymentGatewayState extends State<PaymentGateway> {
   var _key = GlobalKey<FormState>();
   dynamic formData = {};
-  SdkType _radioSelected = SdkType.TESTBOX;
+  SdkType _radioSelected = SdkType.LIVE;
 
   @override
   Widget build(BuildContext context) {
@@ -114,21 +116,21 @@ class _PaymentGatewayState extends State<PaymentGateway> {
                       Text('LIVE'),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0))),
-                        hintText: "Phone number",
-                      ),
-                      onSaved: (value) {
-                        formData['phone'] = value;
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: TextFormField(
+                  //     keyboardType: TextInputType.phone,
+                  //     decoration: InputDecoration(
+                  //       border: OutlineInputBorder(
+                  //           borderRadius:
+                  //           BorderRadius.all(Radius.circular(8.0))),
+                  //       hintText: "Phone number",
+                  //     ),
+                  //     onSaved: (value) {
+                  //       formData['phone'] = value;
+                  //     },
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -156,6 +158,7 @@ class _PaymentGatewayState extends State<PaymentGateway> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: "bkash",
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(

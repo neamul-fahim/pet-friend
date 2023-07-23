@@ -7,6 +7,7 @@ import 'package:pet_friend/admin_panel/admin_panel_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../cart/cart_screen.dart';
+import '../google_map/google_map.dart';
 import '../my_home_page/my_home_page.dart';
 import '../provider/app_drawer_provider.dart';
 import '../signin_login/login.dart';
@@ -94,6 +95,8 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                       drawerProperty(Icons.home_rounded, 'Home',context,()=>MyHomePage()),
                       drawerProperty(Icons.add_circle, 'Add Post',context,()=>MyHomePage()),
                       drawerProperty(Icons.notifications_active, 'Notification',context,()=>MyHomePage()),
+                      drawerProperty(Icons.map, 'Find Pet Care Home',context,()=>SearchPlacesScreen()),
+
                       //drawerProperty(Icons.cloud_rounded, 'Weather',context,()=>Weather()),
                      const Divider(
                         //color: Colors.black,
