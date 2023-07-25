@@ -20,7 +20,7 @@ class FoodModelClass{
       this.firebasePath,
       this.description,
       this.category,
-      this.key,
+      this.key="food",
         this.quantity,
         this.price,
       this.imgURL});

@@ -13,7 +13,7 @@ class AccessoryModelClass{
   double ? price;
   List<dynamic>? imgURL;
 
-  AccessoryModelClass({this.id, this.name,this.firebasePath,this.description,this.category,this.key,this.price,this.imgURL});
+  AccessoryModelClass({this.id, this.name,this.firebasePath,this.description,this.category,this.key="accessory",this.price,this.imgURL});
 
   factory AccessoryModelClass.fromFirestore(DocumentSnapshot<Map<String,dynamic>> snap){
 

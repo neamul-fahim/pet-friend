@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
 import 'package:flutter_sslcommerz/model/SSLCTransactionInfoModel.dart';
@@ -16,6 +17,7 @@ class OrderScreen extends StatelessWidget {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
+  final String imgURL;
 
   OrderScreen({
     required this.customerName,
@@ -26,14 +28,17 @@ class OrderScreen extends StatelessWidget {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
+    required this.imgURL,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.teal,
-      child: Card(
-        margin: EdgeInsets.only(top: 50),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        title: const Text('Order'),
+      ),
+      body:  Card(
         elevation: 100,
         shadowColor: Colors.black,
         child: Column(
@@ -41,57 +46,67 @@ class OrderScreen extends StatelessWidget {
           children: [
             // Customer Details
             ListTile(
-              title: Text('Customer Details', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
+              title: const Text('Customer Details', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 25)),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: $customerName',style: TextStyle(color: Colors.black)),
-                  Text('Email: $email',style: TextStyle(color: Colors.black)),
-                  Text('Phone Number: $phoneNumber',style: TextStyle(color: Colors.black)),
-                  Text('Address: $address',style: TextStyle(color: Colors.black)),
+                  Text('Name: $customerName',style: const TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Email: $email',style: const TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Phone Number: $phoneNumber',style: const TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Address: $address',style: const TextStyle(color: Colors.black,fontSize: 18)),
                 ],
               ),
             ),
-            Divider(),
+            const Divider(color:Colors.black,thickness: 1),
 
             // Product Details
             ListTile(
-              title: Text('Product Details', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: const Text('Product Details', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 25)),
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Product Picture
-                  Image.asset('assets/car_pics/car1.jpg'),
+                  Image.network(imgURL),
 
                   // Product Name, Quantity, Price, and Total Price
-                  Text('Name: $productName',style: TextStyle(color: Colors.black)),
-                  Text('Quantity: $quantity',style: TextStyle(color: Colors.black)),
-                  Text('Price (per unit): \$${unitPrice.toStringAsFixed(2)}',style: TextStyle(color: Colors.black)),
-                  Text('Total Price: \$${totalPrice.toStringAsFixed(2)}',style: TextStyle(color: Colors.black),),
+                  Text('Name: $productName',style: TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Quantity: $quantity',style: TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Price (per unit): ${unitPrice.toStringAsFixed(2)} tk',style: TextStyle(color: Colors.black,fontSize: 18)),
+                  Text('Total Price: ${totalPrice.toStringAsFixed(2)} tk',style: TextStyle(color: Colors.black,fontSize: 18),),
                 ],
               ),
             ),
 
-            SizedBox(height: 50),
+            SizedBox(height: 18),
 
             Center(
               child: ElevatedButton(
                 style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.teal)),
                   onPressed:(){
+                  if(FirebaseAuth.instance.currentUser==null)
+                    Fluttertoast.showToast(msg: "Create an account first");
+
+                  else
                     sslCommerzGeneralCall();
-                         // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                         //    return PaymentGateway();
-                         //      }));
+
                          },
 
                   child:Text("Pay Now",style: TextStyle(color: Colors.white),)),
             ),
-            SizedBox(height: 80),
+            SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.teal)),
                   onPressed:(){
-                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+
+                    if(FirebaseAuth.instance.currentUser==null)
+                      Fluttertoast.showToast(msg: "Create an account first");
+
+                    else
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                             return PaymentGateway();
                               }));
                          },

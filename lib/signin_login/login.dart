@@ -67,6 +67,7 @@ class _LogINState extends State<LogIN> {
                 width: dynamicHeight*0.9999,
 
                 child: CustomTextField(
+                  textInputType: TextInputType.emailAddress,
                     textController: loginEmailController,
                     ErrorMsg: "This field can't be empty",
                     HintText: "Enter your email",
@@ -83,6 +84,7 @@ class _LogINState extends State<LogIN> {
                 width: dynamicHeight*0.9999,
 
                 child: CustomTextField(
+                  textInputType: TextInputType.text,
                     textController: loginPassController,
                     ErrorMsg: "This field can't be empty",
                     HintText: "Enter your password",
@@ -109,6 +111,7 @@ class _LogINState extends State<LogIN> {
 
                     child: ElevatedButton(
 
+                        style:ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.teal)) ,
                         onPressed:() {
                           if(_loginKey.currentState!.validate()){
                             fireBaseLogin(loginEmailController.text, loginPassController.text, context);
@@ -155,7 +158,7 @@ class _LogINState extends State<LogIN> {
                     /// Goto signin page if don't have an account  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                     InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIN()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIN()));
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -209,7 +212,7 @@ class _LogINState extends State<LogIN> {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email.trim(), password: password.trim()).then((value) {
       Fluttertoast.showToast(msg: 'Login successful');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
 
     }).catchError((error){
       Fluttertoast.showToast(timeInSecForIosWeb: 3,msg: error.message);///Here (.message) is a firebase defined message which describes the specific error occurred

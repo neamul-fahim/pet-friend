@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pet_friend/Order_screen/Order_screen.dart';
+import 'package:pet_friend/model_class/user_data_model.dart';
 
 import '../model_class/cart_model_class.dart';
 
@@ -25,6 +27,33 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+    var description;
+
+    if((widget.product.key=="dog"||widget.product.key=="cat") && widget.product.category=="pets") {
+     var t=widget.product;
+      description ="Colors: ${t.colors}, Age: ${t.age}, Breed: ${t.breed}, Trained: ${t.trained}";
+    }
+
+    if(widget.product.key=="bird" && widget.product.category=="pets") {
+     var t=widget.product;
+      description ="Colors: ${t.colors}, Age: ${t.age}, Can Talk: ${t.talk}, Can Fly: ${t.fly}";
+    }
+    if(widget.product.category=="food") {
+     var t=widget.product;
+      description ="${t.key} ${t.category}, Quantity: ${t.quantity}, description: ${t.description}";
+    }
+    if(widget.product.category=="accessory") {
+     var t=widget.product;
+      description ="${t.key} ${t.category}, description: ${t.description}";
+    }
+
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
@@ -64,19 +93,29 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                   Text(
                     widget.product.name,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
+
                   SizedBox(height: 8),
                   Text(
-                    'Product Description',
+                    description,
+                    // "Colors: ${widget.product.colors}, Age: ${widget.product.age}, "
+                    //     " ${widget.product.key=="dog" || widget.product.key=="cat" ? "${"Trained: "+ widget.product.trained} Breed: "+widget.product.breed:""}, "
+                    //       "${widget.product.key=="bird"? "${"Can Talk: "+widget.product.talk} Can Fly: "+widget.product.fly:""}",
+                    //
                     style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 16),
+
+
+                  SizedBox(height: 40),
                   Text(
                     "${widget.product.price.toString()} TK",
                     style: TextStyle(
+                      color: Colors.deepOrange,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -105,19 +144,26 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                             backgroundColor: MaterialStatePropertyAll(Colors.teal.shade400)),
                         icon: Icon(Icons.shopping_bag,size: 25),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>
-                              OrderScreen(
-                                customerName: "fahim",
-                                email: "fahim@gmail.com",
-                                phoneNumber: "01546621548",
-                                address: "320/a,Khilgaon,Dhaka-1219",
-                                productName: "parrot",
-                                quantity: 7,
-                                unitPrice: 100,
-                                totalPrice: 700,
 
+                          UserDataRepository().getFireData().then((value) =>{
+                          UserDataRepository().getCartFireData(widget.product.id).then((quantity) =>{
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>
+                                OrderScreen(
+                                  customerName: value.name.toString(),
+                                  email: value.email.toString(),
+                                  phoneNumber:  value.phone.toString(),
+                                  address: value.address.toString(),
+                                  productName: widget.product.name,
+                                  quantity: quantity,
+                                  unitPrice: widget.product.price,
+                                  totalPrice: quantity*widget.product.price,
+                                  imgURL: widget.product.imgURL[0],
+                                )))
 
-                              )));
+                          })
+
+                          });
+
 
                           // Buy button functionality
                         }, label: Text("Buy Now",style: TextStyle(fontSize: 20),),

@@ -10,6 +10,8 @@ class CustomTextField extends StatefulWidget {
   String LabelText;
   IconData fieldIcon;
   bool obscurePass;
+  dynamic textInputType;
+
   CustomTextField({Key? key,
     required this.textController,
     required this.ErrorMsg,
@@ -17,6 +19,7 @@ class CustomTextField extends StatefulWidget {
     required this.LabelText,
     required this.fieldIcon,
     required this.obscurePass,
+    required this.textInputType,
 
   }) : super(key: key);
 
@@ -33,6 +36,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
+        keyboardType: widget.textInputType,
         controller: widget.textController,
              ///validation of textformfield SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
         validator: (inputString){
@@ -52,7 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
 
         showCursor: true,
-        cursorColor: Colors.indigo,
+        cursorColor: Colors.teal,
         obscureText: widget.obscurePass,
         obscuringCharacter: "*",
         // cursorHeight: 30,
@@ -104,7 +108,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderSide: BorderSide(
               //style: BorderStyle.solid,
               width: 2.5,
-              color: Colors.indigo,
+              color: Colors.teal,
             ),
 
             borderRadius: BorderRadius.only(topLeft:Radius.circular(10) ,topRight:Radius.circular(0) ,
@@ -114,8 +118,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           enabledBorder:  UnderlineInputBorder(
             borderSide: BorderSide(
               //style: BorderStyle.solid,
-              width: 5,
-              color: Colors.lightGreen,
+              width: 2.5,
+              color: Colors.teal,
             ),
 
 
@@ -124,7 +128,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           errorBorder:UnderlineInputBorder(
             borderSide: BorderSide(
               //style: BorderStyle.solid,
-              width: 5,
+              width: 2.5,
               color: Colors.red,
             ),
 

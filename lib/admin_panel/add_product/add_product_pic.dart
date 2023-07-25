@@ -62,6 +62,8 @@ class _AddProductPicState extends State<AddProductPic> {
             child: ElevatedButton.icon(
               style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.teal[400]) ),
                 onPressed:(){
+
+
                 showDialog(
                     context: context, builder: (_){
                       var width=MediaQuery.of(context).size.width;
@@ -87,7 +89,7 @@ class _AddProductPicState extends State<AddProductPic> {
 
                             final ImagePicker picker = ImagePicker();
 
-                            final XFile? image = await picker.pickImage(source: ImageSource.camera);
+                            final XFile? image = await picker.pickImage(imageQuality: 50,source: ImageSource.camera);
                             if(image==null) return;
 
                             setState(() {
@@ -138,15 +140,13 @@ class _AddProductPicState extends State<AddProductPic> {
                       setState(() {
                         isUploading=true;
                       });
-                       print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                       var docID;
-                      print(widget.fireData.category);
+                      //print(widget.fireData.category);
                       if (widget.fireData.category=="pets") ///for pets
                        docID= fireStore.collection("products").doc(widget.fireData.category).collection(widget.fireData.key).doc();
                       else
                         docID= fireStore.collection("products").doc(widget.fireData.category).collection("allTypes").doc();///for accessories and food
 
-                      print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
 
                       ///firebaseStorage pic upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                  for(int i=0;i<(listOfPic.length>5?5:listOfPic.length);i++) {
@@ -158,7 +158,6 @@ class _AddProductPicState extends State<AddProductPic> {
                       }
                       ///firebaseStorage pic upload EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-                      print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
 
 
                       /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -170,11 +169,7 @@ class _AddProductPicState extends State<AddProductPic> {
                           else
                             widget.fireData.firebasePath="products/${widget.fireData.category}/${"allTypes"}/${docID.id}";
 
-                      print("444444444444444444444444444444444444444444444444444444444444444444444444444444444444444");
 
-                      //print("add_product_pic 88888888888888888888888888888888888888888888888888888888888888888");
-                          //print(widget.fireData.firebasePath);
-                          //print(docID.path);
                       await docID.set(
                          widget.fireData.toFirebase(),SetOptions(merge: true)).then((value){
                            setState(() {

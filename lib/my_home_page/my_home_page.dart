@@ -2,7 +2,6 @@
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../bottom_navigation_search_page.dart';
 import '../drawer/drawer_structure.dart';
@@ -10,7 +9,6 @@ import '../featured/featured.dart';
 import '../flash_sale/flash_sale.dart';
 import '../image_slider/image_slider.dart';
 import '../product_categories/product_categories.dart';
-import '../provider/my_home_page_provider.dart';
 
 List<IconData> iconList = [
   Icons.home,
@@ -27,9 +25,11 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-    String appTitle = 'Pet Friend';
+      String appTitle = 'Pet Friend';
 
 class _MyHomePageState extends State<MyHomePage> {
+   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     // Provider.of<MyHomePageProvider>(context, listen: false)
@@ -41,6 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ///TO get out of the app (pop up massage)  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
     return WillPopScope(
       onWillPop: () async {
+      if(_scaffoldKey.currentState != null && _scaffoldKey.currentState!.isDrawerOpen) {
+        return true;
+      }
         bool willpop = false;
         await showDialog(
             context: context,
@@ -66,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ///TO get out of the app (pop up massage)  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
       child: Scaffold(
+        key: _scaffoldKey,
         drawer: CustomAppDrawer(),
 
         appBar: AppBar(
