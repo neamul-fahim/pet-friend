@@ -47,7 +47,7 @@ class _LogINState extends State<LogIN> {
 
                     /// Page title SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
              const Padding(
-                padding:  EdgeInsets.only(top:30 ,bottom: 0,right: 0,left:0 ),
+                padding:  EdgeInsets.only(top:120 ,bottom: 0,right: 0,left:0 ),
                 child: Text("LOGIN",style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize:35

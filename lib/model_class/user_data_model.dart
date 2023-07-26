@@ -23,7 +23,7 @@ class UserDataModel {
       "phone":phone,
        "email":email,
        "address":address,
-        "profilePic":profilePicURL,
+        "profilePicURL":profilePicURL,
     };
   }
 
@@ -64,7 +64,7 @@ class UserDataRepository {
 
       final tempJson = await _db.collection("users").doc(user).get();
         _userData=UserDataModel.fromMap(tempJson.data());
-
+        print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE${_userData.uid} ${_userData.profilePicURL}EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 
     }catch(e){
       print("*********************************************ERROR***************************************");

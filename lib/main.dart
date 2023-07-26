@@ -6,6 +6,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_friend/navigation_screen.dart';
 
 import 'package:pet_friend/provider/accessory_provider.dart';
 import 'package:pet_friend/provider/app_drawer_provider.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home:MyHomePage(),
+       home:NavigationScreen(),
        //FirebaseAuth.instance.currentUser==null? LogIN():MyHomePage() ///comment out if you want to show the login page on start
     );
   }

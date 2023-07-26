@@ -1,7 +1,12 @@
 
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pet_friend/google_map/google_map.dart';
+import 'package:pet_friend/model_class/user_data_model.dart';
+import 'package:pet_friend/user_profile_screen/user_profile_screen.dart';
 
 import '../bottom_navigation_search_page.dart';
 import '../drawer/drawer_structure.dart';
@@ -12,9 +17,7 @@ import '../product_categories/product_categories.dart';
 
 List<IconData> iconList = [
   Icons.home,
-  Icons.category_rounded,
-  Icons.chat_bubble_rounded,
-  Icons.account_circle_rounded,
+  Icons.map_rounded,
 ];
 var _bottomNavIndex = 0;
 
@@ -84,29 +87,41 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
 
         ///Bottom navigation bar SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.teal,
-          foregroundColor: Colors.black,
-          child: Icon(
-            Icons.search_rounded,
-            size: 35,
-          ),
-          onPressed: () {
-            setState(() {
-              BottomNavigationSearch();
-            });
-          },
-          //params
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: AnimatedBottomNavigationBar(
-          backgroundColor: Colors.teal,
-          icons: iconList,
-          activeIndex: _bottomNavIndex,
-          gapLocation: GapLocation.center,
-          notchSmoothness: NotchSmoothness.smoothEdge,
-          onTap: (index) => setState(() => _bottomNavIndex = index),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: Colors.teal,
+        //   foregroundColor: Colors.black,
+        //   child: Icon(
+        //     Icons.account_circle_rounded,
+        //     size: 35,
+        //   ),
+        //   onPressed: () async{
+        //      if(FirebaseAuth.instance.currentUser!=null) {
+        //        var userData = await UserDataRepository().getFireData();
+        //        Navigator.push(context, MaterialPageRoute(builder: (context)=>
+        //            UserProfileScreen(uid: userData.uid,
+        //            name: userData.name,
+        //            phoneNumber: userData.phone,
+        //            email: userData.email,
+        //            address: userData.address,
+        //            profilePicture: userData.profilePicURL)));
+        //
+        //      }
+        //      else {
+        //        Fluttertoast.showToast(msg: "Log into your account");
+        //      }
+        //
+        //       },
+        //   //params
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // bottomNavigationBar: AnimatedBottomNavigationBar(
+        //   backgroundColor: Colors.teal,
+        //   icons: iconList,
+        //   activeIndex: _bottomNavIndex,
+        //   gapLocation: GapLocation.center,
+        //   notchSmoothness: NotchSmoothness.smoothEdge,
+        //   onTap: (index) => setState(() => _bottomNavIndex = index),
+        // ),
 
         ///Bottom navigation bar EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
@@ -124,6 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.red,
                 height: dynamicHeight*0.2,
               ),
+              // if (_bottomNavIndex == 0) MyHomePage(),
+              // if (_bottomNavIndex == 1) SearchPlacesScreen(),
             ],
           ),
         ),

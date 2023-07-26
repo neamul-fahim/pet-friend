@@ -239,7 +239,7 @@ class _SignINState extends State<SignIN> {
                                }
                           },
                           style:ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.teal)) ,
-                          child:Text("Sign in")),
+                          child:Text("Sign in",style: TextStyle(color: Colors.black,fontSize: 25))),
                     ),
                   ),
 

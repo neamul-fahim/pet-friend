@@ -58,14 +58,49 @@ class _CartState extends State<Cart> {
         var path= await db.doc(data["firebasePath"]).get();
         item=CartModelClass();
 
-        item.productQuantity=data["productQuantity"];
-        item.imgURL=path["imgURL"];
+        ///common for all models SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
         item.id=path["id"];
-        item.firebasePath=path["firebasePath"];
         item.name=path["name"];
+        item.firebasePath=path["firebasePath"];
+        item.category=path["category"];
+        item.key=path["key"];
         item.price=path["price"];
+        item.imgURL=path["imgURL"];
+        item.productQuantity=data["productQuantity"];
+        ///common for all models EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111111111111111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
-        cartData.add(item);
+
+        if(item.category=="pets" && (item.key=="dog" || item.key=="cat"))
+          {
+            item.colors=path["colors"];
+            item.breed=path["breed"];
+            item.trained=path["trained"];
+            item.age=path["age"];
+          }
+
+        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT2222222222222222222222222222222TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+
+        if(item.category=="pets" && item.key=="bird")
+          {
+            item.colors=path["colors"];
+            item.talk=path["talk"];
+            item.fly=path["fly"];
+            item.age=path["age"];
+          }
+
+        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT333333333333333333333333333333333333TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+        if(item.category=="accessory" && item.category=="food") item.description=path["description"];
+
+        if(item.category=="food") item.quantity=path["quantity"];
+
+        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT444444444444444444444444444444444444TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+
+
+          cartData.add(item);
       }
       once=false;
       setState(() {
@@ -115,9 +150,10 @@ class _CartState extends State<Cart> {
                                    decoration:  BoxDecoration(
                                        borderRadius: BorderRadius.circular(10),
                                        image: DecorationImage(
-                                         image: CachedNetworkImageProvider(cartData[i].imgURL[0]),
+                                         image: NetworkImage(cartData[i].imgURL[0]),
                                          fit: BoxFit.fill,
-                                       )),
+                                       )
+                                   ),
                                  ),
                                  Column(
                                    crossAxisAlignment: CrossAxisAlignment.start,

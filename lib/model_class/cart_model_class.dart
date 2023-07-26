@@ -2,20 +2,48 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CartModelClass{
+
    String? name;
-  String? firebasePath;
-  int? productQuantity;
-  List<dynamic>? imgURL;
-  String? id;
-  double? price;
+   String? firebasePath;
+   int? productQuantity;
+   List<dynamic>? imgURL;
+   String? id;
+   double? price;
+   String? description;
+   String ? category;  ///accessories
+   String? key; ///cat,dog,bird etc
+   List<dynamic>? colors;
+   String? talk;
+   String? fly;
+   String? age;
+   String? breed;
+   String? trained;
+   String ? quantity;
 
-  CartModelClass({this.name,this.firebasePath, this.productQuantity,this.imgURL,this.id});
 
-       factory CartModelClass.fromFirestore(Map<String,dynamic> data){
+   CartModelClass(
+      {this.name,
+      this.firebasePath,
+      this.productQuantity,
+      this.imgURL,
+      this.id,
+      this.price,
+      this.description,
+      this.category,
+      this.key,
+      this.colors,
+      this.talk,
+      this.fly,
+      this.age,
+      this.breed,
+      this.trained,
+      this.quantity
+      });
+
+  factory CartModelClass.fromFirestore(Map<String,dynamic> data){
 
             return CartModelClass(
               firebasePath: data["firebasePath"],
@@ -66,12 +94,18 @@ class CartModelClass{
         } else{
           scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item reduced from cart"))));
         }
-
-
-
      }
 
-
+      // Future<CollectionReference<Map<String, dynamic>>> getCartProductInfo(dynamic item)async{
+      //   var path=_db.collection("users").doc(uid).collection("cart").doc(item.id);
+      //
+      //   var cartData=await path.get();
+      //   var productJson=_db.collection(cartData["firebasePath"]);
+      //   print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${productJson}JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+      //  return productJson;
+      // }
+     
+     
      Future DeleteCartItem (dynamic item,ScaffoldMessengerState scaffoldMessengerState)async{
        try {
          await _db.collection("users").doc(uid).collection("cart").doc(item.id).delete();
