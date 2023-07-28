@@ -10,7 +10,7 @@
   class  ProductCategoryRepository{
 
        List<ProductCategoryModelClass> categories=[
-         ProductCategoryModelClass('Pets', 'assets/dummy_pic/pets2.webp'),
+         ProductCategoryModelClass('Pets', 'assets/dummy_pic/pets3.jpg'),
          ProductCategoryModelClass('Food', 'assets/dummy_pic/pets_food1.jpg'),
             ProductCategoryModelClass('Accessory', 'assets/dummy_pic/pets_accessories.jpg'),
 
