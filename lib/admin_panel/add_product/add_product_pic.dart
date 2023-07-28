@@ -5,6 +5,7 @@ import 'dart:io' as io;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_friend/model_class/bird_model_class.dart';
 
@@ -37,6 +38,8 @@ class _AddProductPicState extends State<AddProductPic> {
     return Scaffold(
       body: Column(
         children: [
+
+          SizedBox(height: 40,),
           ///to show selected pictures SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
           Expanded(
             flex: 4,
@@ -57,7 +60,7 @@ class _AddProductPicState extends State<AddProductPic> {
 
 
          /// select picture from gallery or camera only 5 pics are allowed SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-          if(listOfPic.length<5)
+          if(listOfPic.length<5 && isUploading==false)
           Flexible(
             child: ElevatedButton.icon(
               style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.teal[400]) ),
@@ -142,56 +145,90 @@ class _AddProductPicState extends State<AddProductPic> {
                       });
                       var docID;
                       //print(widget.fireData.category);
-                      if (widget.fireData.category=="pets") ///for pets
-                       docID= fireStore.collection("products").doc(widget.fireData.category).collection(widget.fireData.key).doc();
-                      else
-                        docID= fireStore.collection("products").doc(widget.fireData.category).collection("allTypes").doc();///for accessories and food
+                      if(listOfPic.length!=0) {
+                        if (widget.fireData.category == "pets")
+
+                          ///for pets
+                          docID = fireStore.collection("products").doc(
+                              widget.fireData.category).collection(
+                              widget.fireData.key).doc();
+                        else
+                          docID = fireStore.collection("products").doc(
+                              widget.fireData.category)
+                              .collection("allTypes")
+                              .doc();
+
+                        ///for accessories and food
 
 
-                      ///firebaseStorage pic upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                 for(int i=0;i<(listOfPic.length>5?5:listOfPic.length);i++) {
-                   var fireStorePath=firebaseStorage
-                       .child("pet_friend").child("products").child(widget.fireData.category!).child(docID.id).child("pic${i+1}");
-                        await fireStorePath.putFile(listOfPic[i]);
-                         var imgURL=await fireStorePath.getDownloadURL();
-                        storageRef.add(imgURL);
+                        ///firebaseStorage pic upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                        for (int i = 0; i <
+                            (listOfPic.length > 5 ? 5 : listOfPic
+                                .length); i++) {
+                          var fireStorePath = firebaseStorage
+                              .child("pet_friend").child("products").child(
+                              widget.fireData.category!).child(docID.id).child(
+                              "pic${i + 1}");
+                          await fireStorePath.putFile(listOfPic[i]);
+                          var imgURL = await fireStorePath.getDownloadURL();
+                          storageRef.add(imgURL);
+                        }
+
+                        ///firebaseStorage pic upload EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+
+                        /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                        widget.fireData.imgURL = storageRef;
+                        widget.fireData.id = docID.id;
+                        if (widget.fireData.category == "pets")
+                          widget.fireData.firebasePath =
+                          "products/${widget.fireData.category}/${widget
+                              .fireData.key}/${docID.id}";
+                        else
+                          widget.fireData.firebasePath =
+                          "products/${widget.fireData
+                              .category}/${"allTypes"}/${docID.id}";
+
+
+                        await docID.set(
+                            widget.fireData.toFirebase(),
+                            SetOptions(merge: true)).then((value) {
+                          setState(() {
+                            isUploading = false;
+                            Navigator.pop(context);
+                          });
+
+                          /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+
+
+                          ScaffoldMessenger.of(context).clearSnackBars();
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Center(
+                                  child: Text("data uploaded to server"))));
+                        }).catchError((err) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Center(child: Text(err.toString()))));
+
+                          ///err.message !!!!!
+                        });
+
+                        setState(() {
+                          listOfPic.clear();
+                        });
                       }
-                      ///firebaseStorage pic upload EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+                      else {
+
+                        Fluttertoast.showToast(msg: "Add atlest one pic");
+                        setState(() {
+                          isUploading=false;
+                        });
+                      }
 
 
 
-                      /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                      widget.fireData.imgURL=storageRef;
-                          widget.fireData.id=docID.id;
-                          if(widget.fireData.category=="pets")
-                          widget.fireData.firebasePath="products/${widget.fireData.category}/${widget.fireData.key}/${docID.id}";
-
-                          else
-                            widget.fireData.firebasePath="products/${widget.fireData.category}/${"allTypes"}/${docID.id}";
-
-
-                      await docID.set(
-                         widget.fireData.toFirebase(),SetOptions(merge: true)).then((value){
-                           setState(() {
-                             isUploading=false;
-                             Navigator.pop(context);
-                           });
-                           /// fireStore data upload SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                           print("55555555555555555555555555555555555555555555555555555555555555555555555555555555555");
-
-
-                           ScaffoldMessenger.of(context).clearSnackBars();
-
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(content: Center(child: Text("data uploaded to server"))));
-
-                      }).catchError((err){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text(err.toString()))));///err.message !!!!!
-                      });
-
-                      setState(() {
-                        listOfPic.clear();
-                      });
                     },
 
                     child: const Text("Save data")),

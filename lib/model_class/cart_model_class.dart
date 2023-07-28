@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CartModelClass{
 
@@ -88,11 +89,13 @@ class CartModelClass{
           var fireData=CartModelClass(firebasePath: item.firebasePath,productQuantity:quantity);
 
          await _db.collection("users").doc(uid).collection("cart").doc(item.id).set(fireData.toFirebase());
-        scaffoldMessengerState.clearSnackBars();
+        //scaffoldMessengerState.clearSnackBars();
         if(increDecre) {
-          scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item added to cart"))));
+          Fluttertoast.showToast(msg:"item added to cart");
+          //scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item added to cart"))));
         } else{
-          scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item reduced from cart"))));
+          Fluttertoast.showToast(msg: "item reduced from cart");
+          //scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("item reduced from cart"))));
         }
      }
 
@@ -109,8 +112,9 @@ class CartModelClass{
      Future DeleteCartItem (dynamic item,ScaffoldMessengerState scaffoldMessengerState)async{
        try {
          await _db.collection("users").doc(uid).collection("cart").doc(item.id).delete();
-         scaffoldMessengerState.clearSnackBars();
-         scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("Item deleted"))));
+         //scaffoldMessengerState.clearSnackBars();
+         Fluttertoast.showToast(msg: "Item deleted");
+         //scaffoldMessengerState.showSnackBar(const SnackBar(duration: Duration(seconds: 1),content: Center(child: Text("Item deleted"))));
        }catch(e){
          print("car_model_classEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE${e.toString()}EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
        }

@@ -49,58 +49,70 @@ class _CartState extends State<Cart> {
 
 
     Future <void> fun() async {
+
       cartData=[];
 
       var fireCartData = await db.collection("users").doc(uid).collection("cart").get();
       for(int i=0;i<fireCartData.docs.length;i++) {
-        var data=fireCartData.docs[i].data();
+        var data = fireCartData.docs[i].data();
 
-        var path= await db.doc(data["firebasePath"]).get();
-        item=CartModelClass();
+        var path = await db.doc(data["firebasePath"]).get();
+        if (path.exists){
+          item = CartModelClass();
 
         ///common for all models SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-        item.id=path["id"];
-        item.name=path["name"];
-        item.firebasePath=path["firebasePath"];
-        item.category=path["category"];
-        item.key=path["key"];
-        item.price=path["price"];
-        item.imgURL=path["imgURL"];
-        item.productQuantity=data["productQuantity"];
+        item.id = path["id"];
+        item.name = path["name"];
+        item.firebasePath = path["firebasePath"];
+        item.category = path["category"];
+        item.key = path["key"];
+        item.price = path["price"];
+        item.imgURL = path["imgURL"];
+        item.productQuantity = data["productQuantity"];
+
         ///common for all models EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111111111111111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+        print(
+            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111111111111111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
 
-        if(item.category=="pets" && (item.key=="dog" || item.key=="cat"))
-          {
-            item.colors=path["colors"];
-            item.breed=path["breed"];
-            item.trained=path["trained"];
-            item.age=path["age"];
-          }
+        if (item.category == "pets" &&
+            (item.key == "dog" || item.key == "cat")) {
+          item.colors = path["colors"];
+          item.breed = path["breed"];
+          item.trained = path["trained"];
+          item.age = path["age"];
+        }
 
-        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT2222222222222222222222222222222TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
-
-        if(item.category=="pets" && item.key=="bird")
-          {
-            item.colors=path["colors"];
-            item.talk=path["talk"];
-            item.fly=path["fly"];
-            item.age=path["age"];
-          }
-
-        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT333333333333333333333333333333333333TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
-        if(item.category=="accessory" && item.category=="food") item.description=path["description"];
-
-        if(item.category=="food") item.quantity=path["quantity"];
-
-        print("TTTTTTTTTTTTTTTTTTTTTTTTTTTT444444444444444444444444444444444444TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+        print(
+            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT2222222222222222222222222222222TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
 
+        if (item.category == "pets" && item.key == "bird") {
+          item.colors = path["colors"];
+          item.talk = path["talk"];
+          item.fly = path["fly"];
+          item.age = path["age"];
+        }
 
-          cartData.add(item);
+        print(
+            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT333333333333333333333333333333333333TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+        if (item.category == "accessory" && item.category == "food")
+          item.description = path["description"];
+
+        if (item.category == "food") item.quantity = path["quantity"];
+
+        print(
+            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT444444444444444444444444444444444444TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+
+        cartData.add(item);
+      }
+        else {
+          await db.collection("users").doc(uid).collection("cart").doc(fireCartData.docs[i].id).delete();
+        }
+
+
       }
       once=false;
       setState(() {

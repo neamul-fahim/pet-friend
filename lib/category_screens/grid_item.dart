@@ -32,6 +32,10 @@ class _GridItemState extends State<GridItem> {
     super.didChangeDependencies();
     scaffoldMessengerState=ScaffoldMessenger.of(context);
   }
+
+
+
+
   var clickAbsorb=false;
 
   void sendToFirebase(dynamic pets){
@@ -53,95 +57,96 @@ class _GridItemState extends State<GridItem> {
 
 
 
-   return Container(
-        //height: dynamicHeight*0.02,
-       // width: dynamicWidth*0.9,
-      decoration: BoxDecoration(
-        // color: Colors.yellow,
-        border:Border.all(color:Colors.teal)
+   return
+     Card(
+     shadowColor: Colors.teal,
+     elevation: 30,
+     color: Colors.teal,
+     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
 
-      ),
-      child: Column(
-        children: [
-          // widget.pets.imgURL[0].isEmpty?const CircularProgressIndicator():
-          // ImageType=="network"?
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                return ProductOverviewScreen(product:widget.pets);
-              }));
-            },
-            child: Container( ///pic container for network image
-            //  color: Colors.blue,
-              height: dynamicHeight*0.15,
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Use MainAxisSize.min to take the minimum height required
+          children: [
+            // widget.pets.imgURL[0].isEmpty?const CircularProgressIndicator():
+            // ImageType=="network"?
+            Expanded(
+              flex: 5,
+              child: SizedBox(
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
-                  image: DecorationImage(
-                    image:CachedNetworkImageProvider(widget.pets.imgURL[0],),fit: BoxFit.fill,
-                    //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
-                  )),),
-          ),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                      return ProductOverviewScreen(product:widget.pets);
+                    }));
+                  },
+                  child:
+                  Image.network(
+                    widget.pets.imgURL[0],
+                    fit: BoxFit.fill,
+                  ),
 
+                  // Container( ///pic container for network image
+                  // //  color: Colors.blue,
+                  //   height: dynamicHeight*0.15,
+                  //     width: double.infinity,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15)),
+                  //       image: DecorationImage(
+                  //         image:NetworkImage(widget.pets.imgURL[0],),fit: BoxFit.fill,
+                  //         //NetworkImage(pets.imgURL[0]),fit: BoxFit.fill,
+                  //       )),),
 
-               Container(  ///text container
-                 //height: dynamicHeight*0.08,
-                 width: double.infinity,
-                 //color: Colors.blue,
-                 child: FittedBox(
-                   fit: BoxFit.scaleDown,
-                   child: //widget.pets.key=="bird"?
-                   Text("${widget.pets.name}",style: const TextStyle(fontSize: 15,),),
-                       //:Text("${widget.pets.breed}",style: const TextStyle(fontSize: 15,),),
-                 ),
-               ),
-
-             Container(  ///price and cart icon
-               //color: Colors.pinkAccent,
-               width: double.infinity,
-               height: dynamicHeight*0.05,
-               child: Row(
-                children: [
-                Spacer(),
-                  FittedBox( fit:BoxFit.scaleDown,
-                      child: Text("\$${widget.pets.price}")),
-                  Spacer(),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                      child: AbsorbPointer(
-                        absorbing: clickAbsorb,
-                        child: IconButton(onPressed: (){
-                          setState(() {
-                            clickAbsorb=true;
-                          });
-                          print("***************************************************${widget.pets.firebasePath}************************");
-
-                          if(FirebaseAuth.instance.currentUser==null) {
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Center(
-                                    child: Text("Don't have an account"))));
-                            return;
-                          }
-                         // print("***************************************************${pets.firebasePath}************************");
-
-                          GetAndSetCartDataToFirebase().setCartDataToFirebase(widget.pets, true,scaffoldMessengerState).then((value) {
-                            setState(() {
-                              clickAbsorb=false;
-                            });
-                          }
-
-                          );
-                          // if(pets.firebasePath!=null)
-                          // cart.addToCart(pets);
-                        },
-                            icon: Icon(Icons.shopping_cart_checkout_outlined,size: 40,)),
-                      )),
-                  const Spacer(),
-                ],
+                ),
+              ),
             ),
-             )
-      ],
+
+            SizedBox(height: 3.0),
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.pets.name,
+                textAlign: TextAlign.center, // Center the text within its space
+                style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            Divider(height: 3,color: Colors.black,indent: 10,endIndent: 10,thickness: 0.5),
+
+            FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12.0,right: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${widget.pets.price} tk",style: TextStyle(fontSize: 20,color: Colors.white),),
+                    SizedBox(width: 16.0), // Add spacing between widgets if needed
+                    IconButton(
+                      onPressed: () {
+                        print("***************************************************${widget.pets.firebasePath}************************");
+
+                        if (FirebaseAuth.instance.currentUser == null) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Center(child: Text("Don't have an account"))),
+                          );
+                          return;
+                        }
+
+                        GetAndSetCartDataToFirebase().setCartDataToFirebase(widget.pets, true, scaffoldMessengerState)
+                            .then((value) {
+                          // Perform actions after adding to cart if needed
+                        });
+                      },
+                      icon: Icon(Icons.shopping_cart_checkout_outlined, size: 40,color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+        ),
       ),
     );
   }

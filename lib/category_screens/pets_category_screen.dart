@@ -59,6 +59,8 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
        int totalC=dogsSize+birdsSize+catsSize;
        int birdsC=0; int catsC=0; int dogsC=0;
        if(filterPets.filterData["birds"]) totalC-=birdsSize;
+       if(filterPets.filterData["dogs"]) totalC-=dogsSize;
+       if(filterPets.filterData["cats"]) totalC-=catsSize;
 
        for(int i=0;i<=totalC;i++){
          if(!filterPets.filterData["birds"])
@@ -66,11 +68,15 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
           pets.add(birds.birdList[birdsC]);
           birdsC++;
         }
-        if(catsC<catsSize){
+
+         if(!filterPets.filterData["cats"])
+           if(catsC<catsSize){
           pets.add(cats.catList[catsC]);
           catsC++;
         }
-        if(dogsC<dogsSize){
+
+         if(!filterPets.filterData["dogs"])
+           if(dogsC<dogsSize){
           pets.add(dogs.dogList[dogsC]);
           dogsC++;
         }
@@ -84,6 +90,7 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
      // List<> pets=cats.catList+birds.birdList+dogs.dogList;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: const Text('All Pets'),
         actions:  [
            IconButton(
@@ -108,14 +115,11 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
           gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 2/3.09,
             crossAxisCount: 3,
-              //crossAxisSpacing: 1,
-           // mainAxisSpacing: 1,
+              crossAxisSpacing: 4,
+            mainAxisSpacing: 4,
           ),
           itemBuilder: (context,item){
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridItem(pets: pets[item],),
-            );///Image.asset(pets[item].imgUrl);
+            return GridItem(pets: pets[item],);///Image.asset(pets[item].imgUrl);
           }),
     );
   }

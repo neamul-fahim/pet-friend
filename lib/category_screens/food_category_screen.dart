@@ -21,19 +21,19 @@ class FoodCategoryScreen extends StatefulWidget {
 
 class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
   bool once=true; bool loadedData=false;
-  List <dynamic> foodList=[];
 
 
   @override
   Widget build(BuildContext context) {
 
     final food=Provider.of<FoodProvider>(context);
+    final filterPets=Provider.of<FilterProvider>(context);
+
 
     //final filterPets=Provider.of<FilterProvider>(context);
 
     Future<void>getData()async {
       await food.initializeFoodList();
-      foodList=food.foodList;
       setState(() {
         once=false;
         loadedData=true;
@@ -41,11 +41,25 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
     }
     if (once) getData();
 
+    List <dynamic> foodList=[];
+
+    void fun(){
+      var t=food.foodList;
+      for(int i=0;i<t.length;i++) {
+        if(!filterPets.filterData["birds"] && t[i].key=="bird") foodList.add(t[i]);
+        if(!filterPets.filterData["cats"] && t[i].key=="cat") foodList.add(t[i]);
+        if(!filterPets.filterData["dogs"] && t[i].key=="dog") foodList.add(t[i]);
+      }
+    }
+
+    fun();
+
 
 
     // List<> accessoryList=cats.catList+birds.birdList+dogs.dogList;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: const Text('All food'),
         actions:  [
           IconButton(
@@ -53,9 +67,9 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
               color: Colors.white,///this color only acts when onPressed in fully implemented
               iconSize: 40,
               onPressed: (){
-                // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                //   return FilterScreen();
-                // }));
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                  return FilterScreen();
+                }));
               },
               icon:Icon(Icons.filter_alt,) //Text("save",style: TextStyle(fontSize: 1),)
           ),
@@ -70,14 +84,11 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
           gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 2/3.09,
             crossAxisCount: 3,
-            //crossAxisSpacing: 1,
-            // mainAxisSpacing: 1,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 4,
           ),
           itemBuilder: (context,item){
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridItem(pets: foodList[item],),
-            );///Image.asset(accessoryList[item].imgUrl);
+            return GridItem(pets: foodList[item],);///Image.asset(accessoryList[item].imgUrl);
           }),
     );
   }

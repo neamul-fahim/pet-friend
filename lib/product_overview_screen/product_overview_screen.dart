@@ -62,11 +62,24 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
+            SizedBox(height: 40,),
+
             CarouselSlider(
               items:[
                 for(int i=0;i<widget.product.imgURL.length;i++)
               Container(
-                     decoration: BoxDecoration(border: Border.all(width:0.1, color: Colors.black),
+                     decoration: BoxDecoration(
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.teal.shade300,
+                             spreadRadius: 5,
+                             blurRadius: 10,
+                             // changes the position of the shadow
+                           ),
+                         ],
+
+                         border: Border.all(width:0.1, color: Colors.black),
                       borderRadius: BorderRadius.circular(20),
                       //color: Colors.red,
                      image: DecorationImage(
@@ -86,6 +99,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                 viewportFraction: 0.8,
               ),
             ),
+
+            SizedBox(height: 40,),
+
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -120,7 +136,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 100),
+                  SizedBox(height: 60),
 
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

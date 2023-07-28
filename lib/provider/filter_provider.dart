@@ -18,4 +18,14 @@
     _filterData["birds"]=switchVal;
     notifyListeners();
   }
+
+  void filterDogs(bool switchVal){
+    _filterData["dogs"]=switchVal;
+    notifyListeners();
+  }
+
+  void filterCats(bool switchVal){
+    _filterData["cats"]=switchVal;
+    notifyListeners();
+  }
 }

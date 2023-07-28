@@ -6,6 +6,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pet_friend/navigation_screen.dart';
 import 'package:pet_friend/signin_login/signin.dart';
 
 import '../my_home_page/my_home_page.dart';
@@ -212,7 +213,7 @@ class _LogINState extends State<LogIN> {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email.trim(), password: password.trim()).then((value) {
       Fluttertoast.showToast(msg: 'Login successful');
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NavigationScreen()));
 
     }).catchError((error){
       Fluttertoast.showToast(timeInSecForIosWeb: 3,msg: error.message);///Here (.message) is a firebase defined message which describes the specific error occurred

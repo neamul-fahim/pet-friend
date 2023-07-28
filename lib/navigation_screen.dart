@@ -6,6 +6,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pet_friend/all_category_screen/all_category_screen.dart';
 import 'package:pet_friend/google_map/google_map.dart';
 import 'package:pet_friend/model_class/user_data_model.dart';
 import 'package:pet_friend/my_home_page/my_home_page.dart';
@@ -17,10 +18,13 @@ import '../featured/featured.dart';
 import '../flash_sale/flash_sale.dart';
 import '../image_slider/image_slider.dart';
 import '../product_categories/product_categories.dart';
+import 'cart/cart_screen.dart';
 
 List<IconData> iconList = [
-  Icons.home,
+  Icons.home_rounded,
+  Icons.category_rounded,
   Icons.map_rounded,
+  Icons.shopping_cart_rounded
 ];
 var _bottomNavIndex = 0;
 
@@ -45,6 +49,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     // Provider.of<MyHomePageProvider>(context, listen: false)
     //     .initializemyHomePageModelClass();
 
@@ -52,7 +57,37 @@ class _NavigationScreenState extends State<NavigationScreen> {
     double dynamicWidth = MediaQuery.of(context).size.width;
 
     ///TO get out of the app (pop up massage)  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      if(_scaffoldKey.currentState != null && _scaffoldKey.currentState!.isDrawerOpen) {
+        return true;
+      }
+      bool willpop = false;
+      await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Alert'),
+        content: Text('Do You Want To Exit?'),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                willpop = true;
+                Navigator.pop(context);
+              },
+              child: Text('Yes')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('No')),
+        ],
+      ));
+      return willpop;
+    },
+    ///TO get out of the app (pop up massage)  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+
+      child:Scaffold(
       key: _scaffoldKey,
       // appBar: AppBar(
       //   centerTitle: true,
@@ -105,7 +140,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ///Bottom navigation bar EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
-      body:_screens[_bottomNavIndex],
+      body:
+      Container(
+        child: _bottomNavIndex == 0? MyHomePage():
+               _bottomNavIndex == 1? AllCategoryScreen():_bottomNavIndex==2?SearchPlacesScreen():Cart(),
+      )
+      )
     );
   }
 }

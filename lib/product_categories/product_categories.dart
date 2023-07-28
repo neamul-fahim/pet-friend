@@ -29,10 +29,10 @@ class ProductCategories extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
 
-      final productCat=Provider.of<ProductCategoryProvider>(context);
-      productCat.initializeCategoryProvider();
+       final productCat=Provider.of<ProductCategoryProvider>(context);
+       productCat.initializeCategoryProvider();
 
-    double dynamicHeight =MediaQuery.of(context).size.height;
+      double dynamicHeight =MediaQuery.of(context).size.height;
     double dynamicWidth =MediaQuery.of(context).size.width;
 
 

@@ -2,7 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/admin_panel/add_product/add_product_details.dart';
 import 'package:pet_friend/admin_panel/add_product/add_product_pic.dart';
+import 'package:pet_friend/admin_panel/admin_drawer.dart';
+import 'package:pet_friend/admin_panel/admin_product_screen.dart';
 import 'package:pet_friend/model_class/app_drawer_model_class.dart';
+import 'package:provider/provider.dart';
+
+import '../category_screens/accessory_category_screen.dart';
+import '../category_screens/food_category_screen.dart';
+import '../category_screens/pets_category_screen.dart';
+import '../provider/product_category_provider.dart';
 
    // var db;
    // bool once=true;
@@ -18,6 +26,9 @@ import 'package:pet_friend/model_class/app_drawer_model_class.dart';
 class _AdminPanelState extends State<AdminPanel> {
     @override
     Widget build(BuildContext context) {
+
+      final productCat=Provider.of<ProductCategoryProvider>(context);
+      productCat.initializeCategoryProvider();
 
       // Future<void> fun()async {
       //   var name = "pets";
@@ -35,96 +46,80 @@ class _AdminPanelState extends State<AdminPanel> {
 
       return Scaffold(
         appBar: AppBar(
+          title: Text("Admin panel"),
           backgroundColor: Colors.teal,
         ),
-        drawer:Drawer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:  EdgeInsets.only(top: dSize.height*0.05),
-                /// profile plus cancel button part SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Container(
-                   // color: Colors.white,
-                    width: dSize.width,
-                    height: dSize.height*0.25,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Spacer(flex: 1),
-                        Expanded(
-                          flex:3,
-                          child: Container(       ///test container
-                            //color: Colors.red,
-
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Column(
-                                children: [
-                                  CircleAvatar(     ///circular profile pic
-                                      radius: dSize.aspectRatio*200,
-                                      backgroundColor: Colors.black),
-
-                     ///profile name
-                    Text("Name",style: TextStyle(color: Colors.black,fontSize: dSize.aspectRatio*60),),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                         // padding: EdgeInsets.only(top: 150),///test container
-                         // color: Colors.yellow,
-                          child: IconButton(///drawer cancel button
-                             alignment: Alignment.topRight,
-                            color: Colors.black,
-                            icon: Icon(Icons.cancel,size: dSize.width*0.08),
-                            onPressed: (){
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ),
-                      ),
-
-                      ],
-
-                    ),
-                  ),
-                ),
-                /// profile plus cancel button part EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-              ),
-
-              SizedBox(height:dSize.height*0.1,),
-
-              TextButton.icon(
-
-                  onPressed: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                   return
-                   AddProduct();
-                 }));
-              },
-                  label: Text("Add Item",style: TextStyle( fontSize: 20,color: Colors.black),),
-                icon:Icon(Icons.add_circle_rounded,size: dSize.width*0.08,color: Colors.black,) ,
-              ),
-
-
-            ],
+        drawer:AdminDrawer(),
+        body:      GridView.builder(
+          padding: EdgeInsets.all(8.0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              childAspectRatio: MediaQuery.of(context).devicePixelRatio/2.6
           ),
-          backgroundColor: Colors.teal.shade100,
+          itemCount: productCat.categoryData.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+                onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                        AdminProductScreen(category: productCat.categoryData[index].name.toLowerCase())));
+
+
+                },
+
+                child: CategoryCard(img: productCat.categoryData[index].imgUrl,name:productCat.categoryData[index].name ,));
+          },
         ),
-        body:
-        Container(color: Colors.white,
+
          // child: Text(db["price"].toString()),
-        )
       );
     }
 }
+
+
+
+class CategoryCard extends StatelessWidget {
+  final String img;
+  final String name;
+
+  CategoryCard({
+    required this.img,
+    required this.name
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: Colors.teal,
+      elevation: 30,
+      color: Colors.teal,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 10,
+              child: Image.asset(
+                img,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Expanded(
+              flex: 2,
+              child: Text(
+                name,
+                textAlign: TextAlign.center, // Center the text within its space
+                style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

@@ -23,6 +23,7 @@ class AccessoriesForm extends StatelessWidget {
           child: TextFormField(
             controller: nameController,
             decoration: InputDecoration(
+              focusColor: Colors.teal,
               labelText: 'Name',
               border: OutlineInputBorder(),
             ),

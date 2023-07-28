@@ -126,7 +126,7 @@ class _AddProductState extends State<AddProduct> {
                       ),
                       value: petsListFirstItem,
                       validator: ((v){
-                        if(v=="Select Category") return "select a valid option";
+                        if(v=="Select pet") return "select a valid option";
                         return null;
                       }),
                       items:petsList.map((e) => DropdownMenuItem(child: Text(e),
@@ -185,6 +185,8 @@ class _AddProductState extends State<AddProduct> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: ElevatedButton(
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
+
                     onPressed: () {
 
                       if (_formKey.currentState!.validate()) {
