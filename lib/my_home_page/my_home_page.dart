@@ -103,7 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ///TO get out of the app (pop up massage)  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
     return Scaffold(
         key: _scaffoldKey,
-        drawer: CustomAppDrawer(),
+
+        endDrawer: CustomAppDrawer(),
 
         appBar: AppBar(
           centerTitle: true,

@@ -49,7 +49,7 @@ class _AdminPanelState extends State<AdminPanel> {
           title: Text("Admin panel"),
           backgroundColor: Colors.teal,
         ),
-        drawer:AdminDrawer(),
+        endDrawer:AdminDrawer(),
         body:      GridView.builder(
           padding: EdgeInsets.all(8.0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

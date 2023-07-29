@@ -22,7 +22,7 @@ class ImageSlider extends StatefulWidget {
 
 
   List<String> petImg=[
-    'assets/dummy_pic/petsPow.jpg',
+    "assets/dummy_pic/img_slider_background.jpg",
     ];
 
 
@@ -106,7 +106,7 @@ class _ImageSliderState extends State<ImageSlider> {
                 //color: Colors.red,
                   image: DecorationImage(
                   image: NetworkImage(index),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
               )
               ),
             )

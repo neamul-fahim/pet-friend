@@ -120,6 +120,8 @@ class _AdminProductGridItemState extends State<AdminProductGridItem> {
                  int lastSlashIndex = widget.products.firebasePath.lastIndexOf('/');
                  String collectionPath = widget.products.firebasePath.substring(0, lastSlashIndex);
                  String documentId = widget.products.firebasePath.substring(lastSlashIndex + 1);
+
+
                  await _db.collection(collectionPath).doc(documentId).delete();
                  Fluttertoast.showToast(msg: "Product deleted from database");
                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>

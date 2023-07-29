@@ -39,6 +39,8 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+
+
     // user=FirebaseAuth.instance.currentUser!.uid;
 
     // print("UUUUUUUUUUUUUUUUUUUUUUU111111111111111111111111111111111111111111111111UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
@@ -133,8 +135,12 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                         endIndent: 15,
                       ),
                       drawerProperty(Icons.cloud_rounded, 'Login',context,()=>LogIN()),
-                    if(FirebaseAuth.instance.currentUser != null) drawerProperty(Icons.logout_rounded, 'Logout',context,()=>LogIN()),
-                      drawerProperty(Icons.admin_panel_settings, "Admin Panel", context, () => AdminPanel())
+                    if(FirebaseAuth.instance.currentUser != null)
+                      drawerProperty(Icons.logout_rounded, 'Logout',context,()=>LogIN()),
+
+
+                      if(FirebaseAuth.instance.currentUser?.uid=="J2orHxVFjoQhml8WRy1lPp4EuK13")
+                        drawerProperty(Icons.admin_panel_settings, "Admin Panel", context, () => AdminPanel())
 
                       /// Drawer options EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
                     ],
