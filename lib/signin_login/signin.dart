@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../admin_panel/add_product/add_product_pic.dart';
 import '../model_class/user_data_model.dart';
 import 'custom_text_form_field.dart';
@@ -34,25 +33,17 @@ class SignIN extends StatefulWidget {
 
    var proPic;
 
-
-
-
 class _SignINState extends State<SignIN> {
   @override
   Widget build(BuildContext context) {
-
-
-
     double dynamicHeight=MediaQuery.of(context).size.height;
     double dynamicWidth=MediaQuery.of(context).size.width;
-
 
     return
       Scaffold(
        body: SingleChildScrollView(
         child: Column(
           children: [
-
             SizedBox(
               height: 10,
             ),
@@ -74,7 +65,6 @@ class _SignINState extends State<SignIN> {
             InkWell(
               onTap:
                   (){
-
                 showDialog(
                     context: context, builder: (_){
                    var width=MediaQuery.of(context).size.width;
@@ -128,8 +118,7 @@ class _SignINState extends State<SignIN> {
                                               ],
                                              );
                                               });
-
-              },
+                                              },
               child: Container(
                 height: dynamicHeight*0.14,
                width: dynamicWidth*0.4,
@@ -139,9 +128,6 @@ class _SignINState extends State<SignIN> {
               ),
             ),
             /// profile pic EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-
-
 
             Form(
               key:_signinKey,
@@ -183,7 +169,7 @@ class _SignINState extends State<SignIN> {
                       fieldIcon: Icons.email_rounded,
                       obscurePass: false,),
                   /// Email field EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-                  ///
+
                  /// Address field  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                   CustomTextField(
                     textInputType: TextInputType.streetAddress,
@@ -224,10 +210,7 @@ class _SignINState extends State<SignIN> {
                     child: Container(
                       height: dynamicHeight*0.06,
                       width: dynamicWidth*0.4,
-
-
                       child: ElevatedButton(
-
                           onPressed:() {
 
                              if(_signinKey.currentState!.validate())
@@ -242,19 +225,14 @@ class _SignINState extends State<SignIN> {
                           child:Text("Sign in",style: TextStyle(color: Colors.black,fontSize: 25))),
                     ),
                   ),
-
-                             /// Signin button EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
+                  /// Signin button EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
-
                       mainAxisAlignment: MainAxisAlignment.center,
-
                       children: [
-
                         /// Asking if the user have an existing account  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                         Text("Have an account?",style: TextStyle(
                           color: Colors.deepOrangeAccent,),
@@ -266,7 +244,6 @@ class _SignINState extends State<SignIN> {
                         InkWell(
                             onTap: (){
                               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LogIN()));
-
                             },
                             child: Container(
                                 decoration: BoxDecoration(
@@ -280,14 +257,10 @@ class _SignINState extends State<SignIN> {
                                 )
                             )
                         ),
-
                         /// Goto login page if have an account  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -311,13 +284,11 @@ class _SignINState extends State<SignIN> {
     Fluttertoast.showToast(timeInSecForIosWeb: 3,msg: error.message);///Here (.message) is a firebase defined message which describes the specific error occurred
   });
   }
-
             ///To signup using FirebaseAuth  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 
         /// TO save user sign up data to firestore SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
   Future<void> saveUserData ()async{
-
     ///profile Pic save SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
     var fireStorePath=firebaseStorage
         .child("pet_friend").child("users").child(user!.uid).child("pics");

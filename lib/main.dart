@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/navigation_screen.dart';
@@ -30,7 +25,6 @@ Future <void> main() async{
   runApp(
       MultiProvider(
          providers: [
-        //ChangeNotifierProvider<MyHomePageProvider>(create: (_)=>MyHomePageProvider()),
         ChangeNotifierProvider<AppDrawerProvider>(create: (_)=>AppDrawerProvider()),
         ChangeNotifierProvider<WeatherProvider>(create: (_)=>WeatherProvider()),
         ChangeNotifierProvider<BirdProvider>(create: (_)=>BirdProvider()),
@@ -59,13 +53,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final birds=Provider.of<BirdProvider>(context);
-    // final cats=Provider.of<CatProvider>(context);
-    // final dogs=Provider.of<DogProvider>(context);
-    //
-    // birds.initializeBirdList();
-    // cats.initializeCatList();
-    // dogs.initializeDogList();
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

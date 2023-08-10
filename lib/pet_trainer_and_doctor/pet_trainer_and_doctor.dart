@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PetTrainerAndDoctor extends StatefulWidget {
   @override
   _PetTrainerAndDoctorState createState() => _PetTrainerAndDoctorState();
@@ -94,7 +93,7 @@ class PetTrainerCard extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Text('Phone Number: 01954199131'),
+            Text('Phone Number: 01954100000'),
             Text('Email: fahim@gmail.com'),
             Text('Address: dhanmondi,dhaka'),
           ],
@@ -120,7 +119,7 @@ class PetDoctorCard extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Text('Phone Number: 01521429559'),
+            Text('Phone Number: 01954100000'),
             Text('Email: momo@gmail.com'),
             Text('Address: khilgaon.dhaka'),
           ],

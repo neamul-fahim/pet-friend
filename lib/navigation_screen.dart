@@ -40,18 +40,8 @@ String appTitle = 'Pet Friend';
 class _NavigationScreenState extends State<NavigationScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-  final List<Widget> _screens = [
-    MyHomePage(),
-    SearchPlacesScreen(),
-    // Add more screens as per your requirement
-  ];
-
   @override
   Widget build(BuildContext context) {
-
-    // Provider.of<MyHomePageProvider>(context, listen: false)
-    //     .initializemyHomePageModelClass();
 
     double dynamicHeight = MediaQuery.of(context).size.height;
     double dynamicWidth = MediaQuery.of(context).size.width;

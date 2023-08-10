@@ -84,18 +84,21 @@ class _AdminProductGridItemState extends State<AdminProductGridItem> {
               // ImageType=="network"?
               Expanded(
                 flex: 5,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                      return AdminProductOverviewScreen(product:widget.products);
-                    }));
-                  },
-                  child:
-                  Image.network(
-                    widget.products.imgURL[0],
-                    fit: BoxFit.fill,
-                  ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                        return AdminProductOverviewScreen(product:widget.products);
+                      }));
+                    },
+                    child:
+                    Image.network(
+                      widget.products.imgURL[0],
+                      fit: BoxFit.fill,
+                    ),
 
+                  ),
                 ),
               ),
 

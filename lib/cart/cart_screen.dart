@@ -1,25 +1,17 @@
 
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_friend/model_class/cart_model_class.dart';
 import 'package:pet_friend/product_overview_screen/product_overview_screen.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/cart_provider.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
-
-
 }
-
 
 class _CartState extends State<Cart> {
 
@@ -40,14 +32,8 @@ class _CartState extends State<Cart> {
 
   var item = CartModelClass();
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-
     Future <void> fun() async {
 
       cartData=[];
@@ -71,9 +57,6 @@ class _CartState extends State<Cart> {
         item.productQuantity = data["productQuantity"];
 
         ///common for all models EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        print(
-            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111111111111111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
 
         if (item.category == "pets" &&
             (item.key == "dog" || item.key == "cat")) {
@@ -83,10 +66,6 @@ class _CartState extends State<Cart> {
           item.age = path["age"];
         }
 
-        print(
-            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT2222222222222222222222222222222TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
-
         if (item.category == "pets" && item.key == "bird") {
           item.colors = path["colors"];
           item.talk = path["talk"];
@@ -94,32 +73,23 @@ class _CartState extends State<Cart> {
           item.age = path["age"];
         }
 
-        print(
-            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT333333333333333333333333333333333333TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
         if (item.category == "accessory" && item.category == "food")
           item.description = path["description"];
 
         if (item.category == "food") item.quantity = path["quantity"];
 
-        print(
-            "TTTTTTTTTTTTTTTTTTTTTTTTTTTT444444444444444444444444444444444444TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
-
         cartData.add(item);
       }
         else {
           await db.collection("users").doc(uid).collection("cart").doc(fireCartData.docs[i].id).delete();
         }
-
-
       }
       once=false;
       setState(() {
         load=true;
       });
     }
-
 
     if(once)fun();
 
@@ -130,11 +100,9 @@ class _CartState extends State<Cart> {
       ),
       body: !load?
           const Center(child:CircularProgressIndicator() )
-      :
-          load && cartData.isEmpty?
+          :load && cartData.isEmpty?
           const Center(child: Text("Add something to the cart",style: TextStyle(fontSize: 25,color: Colors.black38),))
-          :
-      ListView.builder(
+          :ListView.builder(
             itemCount: cartData.length,
               itemBuilder: (context,i){
 
@@ -144,7 +112,6 @@ class _CartState extends State<Cart> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.teal.shade50,
-
                     ),
                     child: Row(
                          children: [
@@ -173,7 +140,6 @@ class _CartState extends State<Cart> {
                                      Text(cartData[i].name,style: TextStyle(fontSize: 18),),
                                      Text("${cartData[i].price.toStringAsFixed(2)} TK"),
                                    ],),
-
                                ],
                              )
 
@@ -199,14 +165,10 @@ class _CartState extends State<Cart> {
                                      icon: const Icon(Icons.do_disturb_on_outlined,color: Colors.black,)),
                                ),
 
-
-
                                Container(
 
                                  child: Text(cartData[i].productQuantity.toString(),style: const TextStyle(fontSize: 18),),
                                ),
-
-
 
                            AbsorbPointer(
                              absorbing: clickAbsorb,
@@ -225,7 +187,6 @@ class _CartState extends State<Cart> {
                              },
                                  icon: const Icon(Icons.add_circle_outline,color: Colors.black,)),
                            ),
-
 
 
                            AbsorbPointer(
@@ -249,7 +210,6 @@ class _CartState extends State<Cart> {
                   ),
                 );
                 /// CircleAvatar(backgroundImage: AssetImage(cart.cartData[i].imgUrl),),
-
           })
     );
   }

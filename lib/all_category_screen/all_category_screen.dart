@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pet_friend/category_screens/accessory_category_screen.dart';
 import 'package:pet_friend/category_screens/pets_category_screen.dart';
 import 'package:provider/provider.dart';
-
 import '../category_screens/food_category_screen.dart';
 import '../provider/product_category_provider.dart';
 
@@ -47,9 +46,6 @@ class AllCategoryScreen extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class CategoryCard extends StatelessWidget {
   final String img;

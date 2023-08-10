@@ -1,15 +1,9 @@
 
-
-
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pet_friend/navigation_screen.dart';
 import 'package:pet_friend/signin_login/signin.dart';
-
-import '../my_home_page/my_home_page.dart';
 import 'custom_text_form_field.dart';
 
 class LogIN extends StatefulWidget {
@@ -24,20 +18,16 @@ class LogIN extends StatefulWidget {
   final TextEditingController loginEmailController=TextEditingController();
    final TextEditingController loginPassController=TextEditingController();
 
-
-
 class _LogINState extends State<LogIN> {
-
 
   var isHover=true;
   var transform;
+
   @override
   Widget build(BuildContext context) {
 
-
     double dynamicHeight=MediaQuery.of(context).size.height;
     double dynamicWidth=MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -45,7 +35,6 @@ class _LogINState extends State<LogIN> {
           key: _loginKey,
           child: Column(
             children: [
-
                     /// Page title SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
              const Padding(
                 padding:  EdgeInsets.only(top:120 ,bottom: 0,right: 0,left:0 ),
@@ -59,7 +48,6 @@ class _LogINState extends State<LogIN> {
               const SizedBox(
                 height: 30,
               ),
-
 
               ///Email field  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
               Container(
@@ -78,7 +66,6 @@ class _LogINState extends State<LogIN> {
               ),
               ///Email field EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-
               ///Password field   SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
               Container(
                 height:  dynamicHeight*0.15,
@@ -95,10 +82,7 @@ class _LogINState extends State<LogIN> {
               ),
               ///Password field  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
-
-
               ///Login button SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-
               isHover?
               Padding(
                 padding: const EdgeInsets.only(left: 0,right:0 ,top: 2,bottom:0 ),
@@ -108,8 +92,6 @@ class _LogINState extends State<LogIN> {
                   child: Container(
                     height: dynamicHeight*0.06,
                     width: dynamicWidth*0.4,
-
-
                     child: ElevatedButton(
 
                         style:ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.teal)) ,
@@ -133,28 +115,21 @@ class _LogINState extends State<LogIN> {
                     transform: transform,
                     height: dynamicHeight*0.06,
                     width: dynamicWidth*0.095,
-
-
                     child: const Center(child: Text("LOGIN")),
                   ),
                 ),
               ),
-
               ///Login button EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-
                   mainAxisAlignment: MainAxisAlignment.center,
-
                   children: [
-
                     /// Asking if the user have an existing account  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                     const Text("Don't have an account?",style: TextStyle(
                       color: Colors.deepOrangeAccent,),),
                     /// Asking if the user have an existing account  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
 
                     /// Goto signin page if don't have an account  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
                     InkWell(
@@ -174,12 +149,9 @@ class _LogINState extends State<LogIN> {
                         )
                     ),
                     /// Goto signin page if don't have an account  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -189,8 +161,6 @@ class _LogINState extends State<LogIN> {
   }
   onHover(bool hover){
     final anim=Matrix4.identity()..translate(200,0,0);
-
-
     setState(() {
       if(hover==true) {
         if (_loginKey.currentState!.validate() == true){
@@ -201,8 +171,6 @@ class _LogINState extends State<LogIN> {
         }
       }
        else{transform=Matrix4.identity();}
-
-
     });
   }
 }
@@ -218,6 +186,5 @@ class _LogINState extends State<LogIN> {
     }).catchError((error){
       Fluttertoast.showToast(timeInSecForIosWeb: 3,msg: error.message);///Here (.message) is a firebase defined message which describes the specific error occurred
     });
-
   }
 }

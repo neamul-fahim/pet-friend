@@ -12,7 +12,6 @@ import '../provider/filter_provider.dart';
 class PetsCategoryScreen extends StatefulWidget {
 
   PetsCategoryScreen({Key? key}) : super(key: key);
-
   @override
   State<PetsCategoryScreen> createState() => _PetsCategoryScreenState();
 }
@@ -42,9 +41,6 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
     if (once) getData();
 
 
-     //print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // print(birds.birdList.length);
-
      /// List <dynamic> pets=[...cats.catList,...birds.birdList,...dogs.dogList]; /// this also works instead of the mixInPetsList function but it doesn't mix the list items
      List <dynamic> pets=[];
 
@@ -53,7 +49,6 @@ class _PetsCategoryScreenState extends State<PetsCategoryScreen> {
        int dogsSize=dogs.dogList.length;
        int birdsSize=birds.birdList.length;
        if(birdsSize==0){
-         //print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
        }
        int catsSize=cats.catList.length;
        int totalC=dogsSize+birdsSize+catsSize;

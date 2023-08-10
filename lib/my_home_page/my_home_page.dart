@@ -1,15 +1,6 @@
 
-
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pet_friend/google_map/google_map.dart';
-import 'package:pet_friend/model_class/user_data_model.dart';
-import 'package:pet_friend/user_profile_screen/user_profile_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../bottom_navigation_search_page.dart';
 import '../drawer/drawer_structure.dart';
 import '../featured/featured.dart';
 import '../flash_sale/flash_sale.dart';
@@ -52,23 +43,17 @@ class _MyHomePageState extends State<MyHomePage> {
     double dynamicWidth = MediaQuery.of(context).size.width;
 
 
-
-
-
     @override
     void initState() {
       super.initState();
       _isMounted = true;
     }
 
-
     @override
     void dispose() {
       _isMounted = false;
       super.dispose();
     }
-
-
 
     final cats=Provider.of<CatProvider>(context);
     final birds=Provider.of<BirdProvider>(context);
@@ -83,10 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
       await food.initializeFoodList();
       await accessory.initializeAccessoryList();
 
-   print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX11111111111111111111111111XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
         setState(() {
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX22222222222222222222222222222222XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
           once=false;
           loadedData=true;
         });
@@ -95,9 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (once) getData();
 
     List <dynamic> products=[];
-
     products=[...birds.birdList,...cats.catList,...dogs.dogList,...food.foodList,...accessory.accessoryList];
-
 
 
     ///TO get out of the app (pop up massage)  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
@@ -105,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
         key: _scaffoldKey,
 
         endDrawer: CustomAppDrawer(),
-
         appBar: AppBar(
           centerTitle: true,
           title: Container(
@@ -117,57 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.teal.shade400,
         ),
 
-        ///Bottom navigation bar SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: Colors.teal,
-        //   foregroundColor: Colors.black,
-        //   child: Icon(
-        //     Icons.account_circle_rounded,
-        //     size: 35,
-        //   ),
-        //   onPressed: () async{
-        //      if(FirebaseAuth.instance.currentUser!=null) {
-        //        var userData = await UserDataRepository().getFireData();
-        //        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-        //            UserProfileScreen(uid: userData.uid,
-        //            name: userData.name,
-        //            phoneNumber: userData.phone,
-        //            email: userData.email,
-        //            address: userData.address,
-        //            profilePicture: userData.profilePicURL)));
-        //
-        //      }
-        //      else {
-        //        Fluttertoast.showToast(msg: "Log into your account");
-        //      }
-        //
-        //       },
-        //   //params
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // bottomNavigationBar: AnimatedBottomNavigationBar(
-        //   backgroundColor: Colors.teal,
-        //   icons: iconList,
-        //   activeIndex: _bottomNavIndex,
-        //   gapLocation: GapLocation.center,
-        //   notchSmoothness: NotchSmoothness.smoothEdge,
-        //   onTap: (index) => setState(() => _bottomNavIndex = index),
-        // ),
-
-        ///Bottom navigation bar EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-
         body: SingleChildScrollView(
           child: Column(
             children: [
               ImageSlider(),
               ProductCategories(),
               if(loadedData==true) FlashSale(products: products),
-
               if(loadedData==true)Featured(scaffoldMessengerState:scaffoldMessengerState,products:products ),
-
-              // if (_bottomNavIndex == 0) MyHomePage(),
-              // if (_bottomNavIndex == 1) SearchPlacesScreen(),
             ],
           ),
         ),
