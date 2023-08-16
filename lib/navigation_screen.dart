@@ -10,8 +10,8 @@ import 'package:pet_friend/all_category_screen/all_category_screen.dart';
 import 'package:pet_friend/google_map/google_map.dart';
 import 'package:pet_friend/model_class/user_data_model.dart';
 import 'package:pet_friend/my_home_page/my_home_page.dart';
+import 'package:pet_friend/pet_trainer_and_doctor/pet_trainer_and_doctor.dart';
 import 'package:pet_friend/user_profile_screen/user_profile_screen.dart';
-
 import '../bottom_navigation_search_page.dart';
 import '../drawer/drawer_structure.dart';
 import '../featured/featured.dart';
@@ -19,11 +19,14 @@ import '../flash_sale/flash_sale.dart';
 import '../image_slider/image_slider.dart';
 import '../product_categories/product_categories.dart';
 import 'cart/cart_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+
 
 List<IconData> iconList = [
   Icons.home_rounded,
   Icons.category_rounded,
-  Icons.map_rounded,
+  kIsWeb?Icons.insert_drive_file_outlined:Icons.map_rounded,
   Icons.shopping_cart_rounded
 ];
 var _bottomNavIndex = 0;
@@ -133,7 +136,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body:
       Container(
         child: _bottomNavIndex == 0? MyHomePage():
-               _bottomNavIndex == 1? AllCategoryScreen():_bottomNavIndex==2?SearchPlacesScreen():Cart(),
+               _bottomNavIndex == 1? AllCategoryScreen():_bottomNavIndex==2 && kIsWeb?PetTrainerAndDoctor():
+               _bottomNavIndex==2 ?SearchPlacesScreen():Cart(),
       )
       )
     );
