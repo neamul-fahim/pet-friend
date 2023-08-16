@@ -38,9 +38,7 @@ class OrderScreen extends StatelessWidget {
         backgroundColor: Colors.teal,
         title: const Text('Order'),
       ),
-      body:  Card(
-        elevation: 100,
-        shadowColor: Colors.black,
+      body:  SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

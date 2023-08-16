@@ -30,6 +30,9 @@ class _LogINState extends State<LogIN> {
     double dynamicWidth=MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white10,elevation: 0.0,iconTheme: IconThemeData(color: Colors.teal),
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _loginKey,
