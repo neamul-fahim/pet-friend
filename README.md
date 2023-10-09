@@ -1,6 +1,7 @@
 # pet_friend
      (F) flutter version-3.10.0 
      (F) to run on web use this command "flutter run --web-renderer html"
+     (F) to run on web use this command "flutter run --web-renderer html"
 
 A new Flutter project.
 

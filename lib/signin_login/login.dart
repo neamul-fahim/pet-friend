@@ -38,15 +38,15 @@ class _LogINState extends State<LogIN> {
           key: _loginKey,
           child: Column(
             children: [
-                    /// Page title SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-             const Padding(
+              /// Page title SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+              const Padding(
                 padding:  EdgeInsets.only(top:120 ,bottom: 0,right: 0,left:0 ),
                 child: Text("LOGIN",style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize:35
                 ),),
               ),
-                 /// Page title EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+              /// Page title EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
               const SizedBox(
                 height: 30,
@@ -60,11 +60,11 @@ class _LogINState extends State<LogIN> {
 
                 child: CustomTextField(
                   textInputType: TextInputType.emailAddress,
-                    textController: loginEmailController,
-                    ErrorMsg: "This field can't be empty",
-                    HintText: "Enter your email",
-                    LabelText:  "Email",
-                    fieldIcon: Icons.email_rounded,
+                  textController: loginEmailController,
+                  ErrorMsg: "This field can't be empty",
+                  HintText: "Enter your email",
+                  LabelText:  "Email",
+                  fieldIcon: Icons.email_rounded,
                   obscurePass: false,),
               ),
               ///Email field EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
@@ -76,12 +76,12 @@ class _LogINState extends State<LogIN> {
 
                 child: CustomTextField(
                   textInputType: TextInputType.text,
-                    textController: loginPassController,
-                    ErrorMsg: "This field can't be empty",
-                    HintText: "Enter your password",
-                    LabelText:  "Password",
-                    fieldIcon: Icons.shield,
-                    obscurePass: true,),
+                  textController: loginPassController,
+                  ErrorMsg: "This field can't be empty",
+                  HintText: "Enter your password",
+                  LabelText:  "Password",
+                  fieldIcon: Icons.shield,
+                  obscurePass: true,),
               ),
               ///Password field  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
