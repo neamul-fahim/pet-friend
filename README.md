@@ -2,7 +2,7 @@
      (F) flutter version-3.10.0 
      (F) to run on web use this command "flutter run --web-renderer html"
      (F) to run on web use this command "flutter run --web-renderer html"
-![Screenshot_20230729_212731_20](https://github.com/neamul-fahim/pet-friend/assets/102896638/c8301666-fc92-4aa1-b84e-5c8964c30f7b) ![Screenshot_20230729_212804_15](https://github.com/neamul-fahim/pet-friend/assets/102896638/bdab0a77-e60f-450b-9751-c7a7d4b35778)
+![Screenshot_20230729_212731](https://github.com/neamul-fahim/pet-friend/assets/102896638/6d851e6a-18ad-40ce-b95e-35e36d3d096d)![Screenshot_20230729_212804](https://github.com/neamul-fahim/pet-friend/assets/102896638/af100822-a05a-4c6c-8534-da65fc4c2abd)
 
 
 A new Flutter project.
